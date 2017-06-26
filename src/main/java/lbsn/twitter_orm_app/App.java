@@ -1,4 +1,4 @@
-package lbsn.spring_example;
+package lbsn.twitter_orm_app;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>lbsn</groupId>
-	<artifactId>spring-example</artifactId>
+	<artifactId>twitter-orm-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 

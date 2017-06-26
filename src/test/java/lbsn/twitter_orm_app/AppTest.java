@@ -1,4 +1,4 @@
-package lbsn.spring_example;
+package lbsn.twitter_orm_app;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

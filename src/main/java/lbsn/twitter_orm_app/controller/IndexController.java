@@ -1,4 +1,4 @@
-package lbsn.spring_example.controller;
+package lbsn.twitter_orm_app.controller;
 
 
 import org.springframework.stereotype.Controller;
