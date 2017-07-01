@@ -1,0 +1,7 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<form:form method="POST" action="/search" modelAttribute="tweetSearch">
+	<form:label path="keyword">Keyword</form:label>
+	<form:input path="keyword"/>
+	<button type="submit">Submit</button>
+</form:form>
