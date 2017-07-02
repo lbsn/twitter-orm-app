@@ -40,11 +40,8 @@
 			<artifactId>jstl</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- spring-boot-security 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>-->
+		<!-- spring-boot-security <dependency> <groupId>org.springframework.boot</groupId> 
+			<artifactId>spring-boot-starter-security</artifactId> </dependency> -->
 		<!-- jquery -->
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -62,6 +59,12 @@
 					<artifactId>jquery</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- twitterj4 -->
+		<dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-stream</artifactId>
+			<version>4.0.6</version>
 		</dependency>
 		<!-- junit -->
 		<dependency>

@@ -1,17 +1,16 @@
 package lbsn.twitter_orm_app.controller;
 
 
-import javax.validation.Valid;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import model.TweetSearch;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import lbsn.twitter_orm_app.tweetsearch.TweetSearch;
+import twitter4j.TwitterException;
 
 @Controller
 public class IndexController{
@@ -22,14 +21,15 @@ public class IndexController{
 	}
 	
 	@GetMapping("/search")
-	public String tweetSearch(Model model){
-		model.addAttribute("tweetSearch", new TweetSearch());
+	public String tweetSearch(@ModelAttribute TweetSearch tweetSearch){
 		return "search";
 	}
 	
 	@PostMapping("/search")
-	public String submit(@ModelAttribute TweetSearch tweetSearch){
-		return "tweet";
+	public ModelAndView submit(@RequestParam(value="keyword") String keyword,
+			TweetSearch tweetSearch) throws TwitterException{
+		ModelAndView model = new ModelAndView("tweet", "tweets", tweetSearch.search());
+		return model;
 	}
 }
 	
