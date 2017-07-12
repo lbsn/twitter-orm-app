@@ -21,6 +21,14 @@
 		<java.version>1.8</java.version>
 		<start-class>lbsn.spring_example.App</start-class>
 	</properties>
+	<!-- Local repository on github -->
+	<repositories>
+		<repository>
+			<id>in-project</id>
+			<name>In Project Repo</name>
+			<url>https://github.com/lbsn/mvn-repo/raw/master/</url>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<!-- spring-boot-starter-web -->
@@ -35,10 +43,17 @@
 			<artifactId>tomcat-embed-jasper</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<scope>provided</scope>
+		</dependency>
+		<!-- SentiStrength -->
+		<dependency>
+			<groupId>uk.ac.wlv</groupId>
+			<artifactId>sentistrength</artifactId>
+			<version>0.0.1</version>
 		</dependency>
 		<!-- spring-boot-security <dependency> <groupId>org.springframework.boot</groupId> 
 			<artifactId>spring-boot-starter-security</artifactId> </dependency> -->
