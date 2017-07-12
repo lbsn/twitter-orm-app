@@ -11,7 +11,6 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.TwitterObjectFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public final class TweetSearch {
@@ -110,9 +109,5 @@ public final class TweetSearch {
 	public String getKeyword(){
 		return this.keyword;
 	}
-	
-//	public String doSth(){
-//		return this.keyword + "***";
-//	}
 	
 }
