@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
+import lbsn.twitter_orm_app.model.Tweet;
+import lbsn.twitter_orm_app.repository.TweetDao;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.RateLimitStatus;
@@ -26,10 +30,12 @@ public final class TweetSearch {
 
 	private Twitter twitter;
 	private String keyword;
-
+	
+	
 	/**
 	 * Constructor
 	 */
+	
 	public TweetSearch(){
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)

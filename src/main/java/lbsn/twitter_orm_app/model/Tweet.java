@@ -13,10 +13,19 @@ public class Tweet {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@NotNull
-	private String username;
-	
-	public Tweet(String username){
-		this.username = username;
+	private String text;
+
+	public String getText() {
+		return text;
 	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Long getId() {
+		return id;
+	}
+	
+	
 }
