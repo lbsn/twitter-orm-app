@@ -1,6 +1,7 @@
 package lbsn.twitter_orm_app.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,12 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lbsn.twitter_orm_app.model.Tweet;
+import lbsn.twitter_orm_app.repository.TweetDao;
 import lbsn.twitter_orm_app.sentiment.SentimentClassifier;
 import lbsn.twitter_orm_app.tweetsearch.TweetSearch;
 import twitter4j.TwitterException;
 
 @Controller
 public class IndexController{
+	
+	@Autowired
+	private TweetDao tweetDao;
 	
 	@RequestMapping(value={"/", "/home"})
 	public String index(){
@@ -30,6 +36,8 @@ public class IndexController{
 	public ModelAndView submit(@RequestParam(value="keyword") String keyword,
 			TweetSearch tweetSearch) throws TwitterException{
 		ModelAndView model = new ModelAndView("tweet", "tweets", tweetSearch.search());
+		Tweet tweet = new Tweet("luca");
+		tweetDao.save(tweet);
 		return model;
 	}
 	
