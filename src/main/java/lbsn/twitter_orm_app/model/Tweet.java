@@ -1,17 +1,12 @@
 package lbsn.twitter_orm_app.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
-@Table(name="tweet")
+@Document(collection="tweets")
 public class Tweet {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private String id;
 
 	private String text;
 
@@ -23,7 +18,7 @@ public class Tweet {
 		this.text = text;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	

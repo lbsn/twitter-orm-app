@@ -36,8 +36,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- devtools <dependency> <groupId>org.springframework.boot</groupId> 
-			<artifactId>spring-boot-devtools</artifactId> <optional>true</optional> </dependency> -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
@@ -55,19 +53,12 @@
 			<artifactId>sentistrength</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-		<!-- spring-boot-security <dependency> <groupId>org.springframework.boot</groupId> 
-			<artifactId>spring-boot-starter-security</artifactId> </dependency> -->
 		<!-- starter-data -->
+		<!-- mongodb -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<!-- postgresql -->
-		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.1-901-1.jdbc4</version>
-		</dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
 		<!-- jquery -->
 		<dependency>
 			<groupId>org.webjars</groupId>
