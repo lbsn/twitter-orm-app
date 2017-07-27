@@ -29,29 +29,29 @@ public class IndexController{
 		return "index";
 	}
 	
-	@GetMapping("/search")
-	public String tweetSearch(@ModelAttribute TweetSearch tweetSearch){
-		return "search";
-	}
-	
-	@PostMapping("/search")
-	public ModelAndView submit(@RequestParam(value="keyword") String keyword,
-			TweetSearch tweetSearch) throws TwitterException{
-		ArrayList<Status> tweets = tweetSearch.search();
-		for(Status s : tweets){
-			Tweet t = new Tweet();
-			t.setText(s.getText());
-			tweetDao.save(t);
-		}
-		ModelAndView model = new ModelAndView("tweet", "tweets", tweets);
-		return model;
-	}
-	
-	@RequestMapping("/test")
-	public ModelAndView score(SentimentClassifier sc){
-		String text = "I'm very happy to be here!";
-		String sentiment = sc.score(text);
-		return new ModelAndView("test", "model", sentiment);
-	}
+//	@GetMapping("/search")
+//	public String tweetSearch(@ModelAttribute TweetSearch tweetSearch){
+//		return "search";
+//	}
+//	
+//	@PostMapping("/search")
+//	public ModelAndView submit(@RequestParam(value="keyword") String keyword,
+//			TweetSearch tweetSearch) throws TwitterException{
+//		ArrayList<Status> tweets = tweetSearch.searchTweets();
+//		for(Status s : tweets){
+//			Tweet t = new Tweet();
+//			t.setText(s.getText());
+//			tweetDao.save(t);
+//		}
+//		ModelAndView model = new ModelAndView("tweet", "tweets", tweets);
+//		return model;
+//	}
+//	
+//	@RequestMapping("/test")
+//	public ModelAndView score(SentimentClassifier sc){
+//		String text = "I'm very happy to be here!";
+//		String sentiment = sc.score(text);
+//		return new ModelAndView("test", "model", sentiment);
+//	}
 }
 	

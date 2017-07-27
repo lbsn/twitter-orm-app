@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +24,7 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 @Service
+@ConfigurationProperties(prefix = "twitter")
 public final class TweetSearch {
 	private static final String CONSUMER_KEY = "EUCjmzK9zUx1LRaD6eSGjailF";
 	private static final String CONSUMER_SECRET = "wotBftJjZCceKHGoj29UHv2jq9IL4Mfwrcfpo6OXHWdSNAXfr8";
@@ -34,9 +39,15 @@ public final class TweetSearch {
 	
 	/**
 	 * Constructor
-	 */
+	 */	
+	public TweetSearch(){		
+	}
 	
-	public TweetSearch(){
+	/**
+	 * Initializes an instance of twitter4j
+	 */
+	@PostConstruct
+	public void init(){
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 		.setOAuthConsumerKey(TweetSearch.CONSUMER_KEY)
@@ -44,22 +55,22 @@ public final class TweetSearch {
 		.setOAuthAccessToken(TweetSearch.ACCESS_TOKEN)
 		.setOAuthAccessTokenSecret(TweetSearch.ACCESS_SECRET)
 		.setJSONStoreEnabled(true);
-
 		this.twitter = new TwitterFactory(cb.build()).getInstance();
 	}
 
 	/**
-	 * Retrieves tweets
+	 * Retrieves tweets using the set keyword
 	 * @param keyword
+	 * @return ArrayList of Status objects
 	 * @throws TwitterException 
 	 */
-	public ArrayList<Status> search() throws TwitterException{
+	public ArrayList<Status> searchTweets() throws TwitterException{
 		ArrayList<Status> fetchedTweets = new ArrayList<Status>(); 
 		Query query = new Query(this.keyword);
 		query.setCount(TweetSearch.NUM_TWEETS);
 		QueryResult result = null;
 
-		// Retrieves tweets until NUM_TWEETS is reached.
+		// Retrieves tweets until NUM_TWEETS is reached
 		int nTweets = 0;
 		int iTweet = 0;
 		while (nTweets < NUM_TWEETS && query != null) {
@@ -111,10 +122,18 @@ public final class TweetSearch {
 		return fetchedTweets;
 	}
 	
+	/**
+	 * Set a keyword to be used in tweet search
+	 * @param val
+	 */
 	public void setKeyword(String val){
 		this.keyword = val;
 	}
 	
+	/**
+	 * Get the keyword
+	 * @return String
+	 */
 	public String getKeyword(){
 		return this.keyword;
 	}

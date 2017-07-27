@@ -1,0 +1,7 @@
+<div class="col-md-2 navbar sidebar bg-inverse">
+	<div class="side-section">
+		<%@ include file="/WEB-INF/include/searchForm.jspf"%>
+	</div>
+	<div class="side-section">Section 2</div>
+	<div class="side-section">Section 3</div>
+</div>
