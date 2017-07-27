@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.sentiment;
+package lbsn.twitter_orm_app.service;
 
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.model;
+package lbsn.twitter_orm_app.domain;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

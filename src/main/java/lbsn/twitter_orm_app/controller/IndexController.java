@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import lbsn.twitter_orm_app.model.Tweet;
+import lbsn.twitter_orm_app.domain.Tweet;
 import lbsn.twitter_orm_app.repository.TweetDao;
-import lbsn.twitter_orm_app.sentiment.SentimentClassifier;
-import lbsn.twitter_orm_app.tweetsearch.TweetSearch;
+import lbsn.twitter_orm_app.service.SentimentClassifier;
+import lbsn.twitter_orm_app.service.TweetSearch;
 import twitter4j.Status;
 import twitter4j.TwitterException;
 

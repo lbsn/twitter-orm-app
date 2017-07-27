@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.tweetsearch;
+package lbsn.twitter_orm_app.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
-import lbsn.twitter_orm_app.model.Tweet;
+import lbsn.twitter_orm_app.domain.Tweet;
 import lbsn.twitter_orm_app.repository.TweetDao;
 import twitter4j.Query;
 import twitter4j.QueryResult;
