@@ -1,3 +1,20 @@
+body{
+	color:white;
+}
 .navbar{
    border-radius:0px;
+}
+
+/* SIDEBAR */
+.sidebar{
+	position:fixed;
+	height:100%;
+}
+.side-section{
+	padding:5px;
+	border-bottom:solid 2px white;
+	margin-bottom:10px;
+}
+.search-input{
+	margin-bottom:5px;
 }
