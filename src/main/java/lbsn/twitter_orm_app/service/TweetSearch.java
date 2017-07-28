@@ -2,26 +2,12 @@ package lbsn.twitter_orm_app.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.social.twitter.api.Tweet;
+import org.springframework.social.twitter.api.Twitter;
+import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.stereotype.Service;
-
-import lbsn.twitter_orm_app.domain.Tweet;
-import lbsn.twitter_orm_app.repository.TweetDao;
-import twitter4j.Query;
-import twitter4j.QueryResult;
-import twitter4j.RateLimitStatus;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 
 @Service
 @ConfigurationProperties(prefix = "twitter")
@@ -36,106 +22,28 @@ public final class TweetSearch {
 	private Twitter twitter;
 	private String keyword;
 	
-	
 	/**
 	 * Constructor
 	 */	
-	public TweetSearch(){		
+	public TweetSearch(){
+		this.twitter = new TwitterTemplate(
+				this.CONSUMER_KEY,
+				this.CONSUMER_SECRET,
+				this.ACCESS_TOKEN,
+				this.ACCESS_SECRET
+				);
 	}
 	
-	/**
-	 * Initializes an instance of twitter4j
-	 */
-	@PostConstruct
-	public void init(){
-		ConfigurationBuilder cb = new ConfigurationBuilder();
-		cb.setDebugEnabled(true)
-		.setOAuthConsumerKey(TweetSearch.CONSUMER_KEY)
-		.setOAuthConsumerSecret(TweetSearch.CONSUMER_SECRET)
-		.setOAuthAccessToken(TweetSearch.ACCESS_TOKEN)
-		.setOAuthAccessTokenSecret(TweetSearch.ACCESS_SECRET)
-		.setJSONStoreEnabled(true);
-		this.twitter = new TwitterFactory(cb.build()).getInstance();
+	public List<Tweet> search(){
+		return this.twitter.searchOperations().search(this.keyword).getTweets();
 	}
 
-	/**
-	 * Retrieves tweets using the set keyword
-	 * @param keyword
-	 * @return ArrayList of Status objects
-	 * @throws TwitterException 
-	 */
-	public ArrayList<Status> searchTweets() throws TwitterException{
-		ArrayList<Status> fetchedTweets = new ArrayList<Status>(); 
-		Query query = new Query(this.keyword);
-		query.setCount(TweetSearch.NUM_TWEETS);
-		QueryResult result = null;
-
-		// Retrieves tweets until NUM_TWEETS is reached
-		int nTweets = 0;
-		int iTweet = 0;
-		while (nTweets < NUM_TWEETS && query != null) {
-
-			result = this.twitter.search(query);
-			query = result.nextQuery();
-			List<Status> tweets = result.getTweets();
-
-			for (Status tweet : tweets ) {
-				if (tweet.getUser().getLang().equalsIgnoreCase(LANG)) {
-					fetchedTweets.add(tweet);
-					iTweet++;
-				}
-				if (iTweet >= NUM_TWEETS) {
-					break;
-				}
-			}
-
-			nTweets += tweets.size();
-
-			// Waits in case of rate limit exceeded
-			boolean bWait = true;
-			while (bWait) {
-				try {
-					Map<String, RateLimitStatus> oRT = twitter.getRateLimitStatus();
-					RateLimitStatus rateLimit = oRT.get("/search/tweets");
-					int remaining = rateLimit.getRemaining();
-					System.out.println("Remaining API calls: " + remaining);
-					int remainingTime = rateLimit.getSecondsUntilReset();
-
-					if (remaining <= 1) {
-						System.out.println("Waiting " + remainingTime + " seconds");
-						Thread.sleep(remainingTime * 1000);
-					} 
-					else {
-						bWait = false;
-					}
-				} 
-				catch (Exception te) {
-					try {
-						Thread.sleep(60 * 1000);
-					} 
-					catch (InterruptedException ex) {
-
-					}
-				}
-			}
-		}
-		return fetchedTweets;
+	public String getKeyword() {
+		return keyword;
 	}
-	
-	/**
-	 * Set a keyword to be used in tweet search
-	 * @param val
-	 */
-	public void setKeyword(String val){
-		this.keyword = val;
-	}
-	
-	/**
-	 * Get the keyword
-	 * @return String
-	 */
-	public String getKeyword(){
-		return this.keyword;
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	
 }

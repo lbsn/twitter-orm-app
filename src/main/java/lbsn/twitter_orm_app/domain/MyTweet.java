@@ -3,26 +3,10 @@ package lbsn.twitter_orm_app.domain;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.social.twitter.api.Tweet;
 
 @Document(collection="tweets")
 
-public class Tweet {
-	@Id
-	private String id;
-
-	private String text;
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public String getId() {
-		return id;
-	}
-	
+public class MyTweet{
 	
 }

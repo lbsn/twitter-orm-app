@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import lbsn.twitter_orm_app.domain.Tweet;
+import lbsn.twitter_orm_app.domain.MyTweet;
 import lbsn.twitter_orm_app.repository.TweetDao;
 import lbsn.twitter_orm_app.service.SentimentClassifier;
 import lbsn.twitter_orm_app.service.TweetSearch;
@@ -40,7 +40,7 @@ public class IndexController{
 //			TweetSearch tweetSearch) throws TwitterException{
 //		ArrayList<Status> tweets = tweetSearch.searchTweets();
 //		for(Status s : tweets){
-//			Tweet t = new Tweet();
+//			MyTweet t = new MyTweet();
 //			t.setText(s.getText());
 //			tweetDao.save(t);
 //		}
