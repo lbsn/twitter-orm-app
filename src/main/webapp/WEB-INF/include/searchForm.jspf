@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<form:form  class="form" method="POST" action="/search" modelAttribute="tweetSearch">
+<form:form  class="form" method="POST" action="/search" modelAttribute="tweetStream">
 	<div class="form-group">
 		<form:label path="keyword" for="keyword-control">Search</form:label>
 		<form:input path="keyword" class="form-control search-input" type="text" id="keyword-control"/>

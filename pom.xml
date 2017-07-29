@@ -53,12 +53,16 @@
 			<artifactId>sentistrength</artifactId>
 			<version>0.0.1</version>
 		</dependency>
-		<!-- starter-data -->
 		<!-- mongodb -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
+		<!-- actuator -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
 		<!-- jquery -->
 		<dependency>
 			<groupId>org.webjars</groupId>
