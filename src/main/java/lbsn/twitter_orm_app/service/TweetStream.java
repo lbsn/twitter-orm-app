@@ -3,6 +3,10 @@ package lbsn.twitter_orm_app.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -17,9 +21,11 @@ import org.springframework.social.twitter.api.Twitter;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.stereotype.Service;
 
+import lbsn.twitter_orm_app.repository.TweetDao;
+
 @Service
 @ConfigurationProperties(prefix = "twitter")
-public final class TweetStream implements StreamListener{
+public final class TweetStream implements StreamListener, Runnable{
 	private static final String CONSUMER_KEY = "EUCjmzK9zUx1LRaD6eSGjailF";
 	private static final String CONSUMER_SECRET = "wotBftJjZCceKHGoj29UHv2jq9IL4Mfwrcfpo6OXHWdSNAXfr8";
 	private static final String ACCESS_TOKEN = "875757581498798081-1Ptkb4NAF2vPms4YJpqbD8q3gE2HWjJ";
@@ -29,6 +35,11 @@ public final class TweetStream implements StreamListener{
 
 	private Twitter twitter;
 	private String keyword;
+	@Autowired
+	private ThreadPoolTaskExecutor taskExecutor;
+	@Autowired
+	private TweetDao tweetDao;
+	private BlockingQueue<Tweet> queue = new ArrayBlockingQueue<>(20);
 	
 	/**
 	 * Constructor
@@ -42,11 +53,18 @@ public final class TweetStream implements StreamListener{
 				);
 	}
 	
+	public void startStreaming() throws Exception {
+		for (int i = 0; i < this.taskExecutor.getMaxPoolSize(); i++) {
+			this.taskExecutor.execute(new TweetProcessor(this.tweetDao,this.queue));
+		}
+
+		run();
+	}
+	
 	public void run(){
 		this.twitter.
 				streamingOperations().
 				filter(this.keyword, Arrays.asList(this));
-		System.out.println("-------------- STARTED");
 	}
 
 	public String getKeyword() {
@@ -71,8 +89,14 @@ public final class TweetStream implements StreamListener{
 
 	@Override
 	public void onTweet(Tweet tweet) {
-		System.out.println(tweet.getText());
-		
+		// Filter tweets in english
+		// TODO: What about tweets with undefined language code?
+		if(tweet.getLanguageCode().equals(this.LANG)){
+			this.queue.offer(tweet);
+		}
+		else{
+			System.out.println(tweet.getLanguageCode());
+		}
 	}
 
 	@Override
