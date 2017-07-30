@@ -8,8 +8,10 @@ import java.util.concurrent.BlockingQueue;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -39,6 +41,8 @@ public final class TweetStream implements StreamListener, Runnable{
 	private ThreadPoolTaskExecutor taskExecutor;
 	@Autowired
 	private TweetDao tweetDao;
+	@Autowired
+	private BeanFactory beanFactory;
 	private BlockingQueue<Tweet> queue = new ArrayBlockingQueue<>(20);
 	
 	/**
@@ -55,7 +59,10 @@ public final class TweetStream implements StreamListener, Runnable{
 	
 	public void startStreaming() throws Exception {
 		for (int i = 0; i < this.taskExecutor.getMaxPoolSize(); i++) {
-			this.taskExecutor.execute(new TweetProcessor(this.tweetDao,this.queue));
+			this.taskExecutor.execute(
+//					new TweetProcessor(this.tweetDao,this.queue)
+					(TweetProcessor) this.beanFactory.getBean("tweetProcessor", this.queue)
+					);
 		}
 
 		run();
