@@ -1,24 +1,10 @@
 package lbsn.twitter_orm_app.controller;
 
 
-import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-
-import lbsn.twitter_orm_app.domain.MyTweet;
 import lbsn.twitter_orm_app.repository.TweetDao;
-import lbsn.twitter_orm_app.service.SentimentClassifier;
-import lbsn.twitter_orm_app.service.TweetSearch;
-import twitter4j.Status;
-import twitter4j.TwitterException;
 
 @Controller
 public class IndexController{
