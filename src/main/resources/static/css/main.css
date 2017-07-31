@@ -1,5 +1,4 @@
 body{
-	color:white;
 }
 .navbar{
    border-radius:0px;
@@ -7,7 +6,7 @@ body{
 
 /* SIDEBAR */
 .sidebar{
-	position:fixed;
+	color:white;
 	height:100%;
 }
 .side-section{

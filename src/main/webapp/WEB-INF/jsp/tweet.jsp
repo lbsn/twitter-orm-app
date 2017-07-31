@@ -18,9 +18,8 @@
 		<div class="row">
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
-			<div class="col-md-10">
-			<div id="feedback">
-			</div>
+			<div class="col-md-10 tweets-container" id="tweets-container" data-streaming="true">
+				<div id="feedback"></div>
 			</div>
 		</div>
 	</div>
