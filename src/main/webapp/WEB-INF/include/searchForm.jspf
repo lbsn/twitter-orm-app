@@ -1,13 +1,10 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
-<form:form  class="form" method="POST" action="/search" modelAttribute="tweetStream">
+<form  class="form" id="search-form">
 	<div class="form-group">
-		<form:label path="keyword" for="keyword-control">Search</form:label>
-		<form:input path="keyword" class="form-control search-input" type="text" id="keyword-control"/>
+		<label path="keyword" for="keyword-control">Search</label>
+		<input path="keyword" class="form-control search-input" type="text" id="keyword-control"/>
 	</div>
 	<div class="form-group">
-		<button type="submit" class="btn btn-primary search-btn">Submit</button>
+		<button type="submit" class="btn btn-primary search-btn" id="btn-search">Submit</button>
 		<button type="reset" class="btn btn-primary search-btn">Reset</button>
 	</div>
-	
-</form:form>
+<form>

@@ -18,6 +18,10 @@
 		<div class="row">
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
+			<div class="col-md-10">
+			<div id="feedback">
+			</div>
+			</div>
 		</div>
 	</div>
 
@@ -25,5 +29,6 @@
 	<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="webjars/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

@@ -2,9 +2,12 @@ package lbsn.twitter_orm_app.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import lbsn.twitter_orm_app.repository.TweetDao;
@@ -22,9 +25,9 @@ public class TweetController {
 		return "tweet";
 	}
 	
-	@PostMapping("/search")
-	public String submit(@RequestParam(value="keyword") String keyword) throws Exception{
+	@PostMapping("/search")	
+	public ResponseEntity<String> submit(@RequestBody String keyword) throws Exception{
 		tweetStream.startStreaming();
-		return "tweet";
+		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
 }
