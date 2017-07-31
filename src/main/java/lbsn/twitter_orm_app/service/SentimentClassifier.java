@@ -10,11 +10,11 @@ public class SentimentClassifier extends SentiStrength{
 	
 	public SentimentClassifier(){
 		this.ss_data = getClass().getResource("/data/SentStrength_Data/").getPath();
-		String ssInit[] = {"sentidata", this.ss_data};
+		String ssInit [] = {"sentidata", this.ss_data, "trinary"};
 		this.initialise(ssInit);
 	}
 	
 	public String score(String text){
-		return this.computeSentimentScores(text);
+		return this.computeSentimentScores(text).split(" ")[2];
 	}
 }
