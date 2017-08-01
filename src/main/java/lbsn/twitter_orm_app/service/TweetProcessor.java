@@ -19,9 +19,11 @@ public class TweetProcessor implements Runnable{
 	SentimentClassifier sentClassifier;
 	
 	private final BlockingQueue<Tweet> queue;
+	private String keyword;
 	
-	public TweetProcessor(BlockingQueue<Tweet> queue){
+	public TweetProcessor(BlockingQueue<Tweet> queue, String keyword){
 		this.queue = queue;
+		this.keyword = keyword;
 	}
 	
 	@Override
@@ -38,14 +40,17 @@ public class TweetProcessor implements Runnable{
 	}
 	
 	public void process(Tweet tweet){
-		TweetEntity entity = new TweetEntity(tweet);
-
-		// Get sentiment
+		TweetEntity entity = new TweetEntity();
+		// Set keyword
+		entity.setKeyword(this.keyword);
+		// Set sentiment
 		entity.setSentiment(this.scoreSentiment(tweet.getText()));
+		// Set text
+		entity.setText(tweet.getText());
 		
 		// Save
 		this.tweetDao.save(entity);
-		System.out.println("saved");
+		System.out.println("saved for keyword: " + this.keyword);
 	}
 	
 	/**

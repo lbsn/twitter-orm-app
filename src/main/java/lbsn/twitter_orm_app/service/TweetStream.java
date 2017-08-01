@@ -60,8 +60,7 @@ public final class TweetStream implements StreamListener, Runnable{
 	public void startStreaming() throws Exception {
 		for (int i = 0; i < this.taskExecutor.getMaxPoolSize(); i++) {
 			this.taskExecutor.execute(
-//					new TweetProcessor(this.tweetDao,this.queue)
-					(TweetProcessor) this.beanFactory.getBean("tweetProcessor", this.queue)
+					(TweetProcessor) this.beanFactory.getBean("tweetProcessor", this.queue, this.keyword)
 					);
 		}
 
@@ -72,6 +71,7 @@ public final class TweetStream implements StreamListener, Runnable{
 		this.twitter.
 				streamingOperations().
 				filter(this.keyword, Arrays.asList(this));
+		System.out.println("------------------- STARTED STREMING FOR " + this.keyword);
 	}
 
 	public String getKeyword() {

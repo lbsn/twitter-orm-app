@@ -19,7 +19,7 @@
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
 			<div class="col-md-10 tweets-container" id="tweets-container" data-streaming="true">
-				<div id="feedback"></div>
+				<div id="feedback"><a href="#" id="test-btn">update</button></div>
 			</div>
 		</div>
 	</div>
@@ -29,5 +29,6 @@
 	<script type="text/javascript"
 		src="webjars/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
+	
 </body>
 </html>

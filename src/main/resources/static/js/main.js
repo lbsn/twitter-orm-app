@@ -1,42 +1,38 @@
-$(document).ready(function () {
-//	setInterval("update()", 10000);
-    $("#search-form").submit(function (event) {
-        event.preventDefault();
-        startStreaming();
-    });
-
+$(document).ready(function(){
+	/* SEARCH */
+	$('#btn-search').click(function(){
+		var search = {};
+		search["keyword"] = $("#keyword-control").val();
+	    $("#btn-search").prop("disabled", true);
+	    $.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/api/search",
+	        data: JSON.stringify(search),
+	        dataType: 'text',
+	        cache: false,
+	        timeout: 600000,
+	        success: function (data) {
+	            $("#btn-search").prop("disabled", false);
+	        }
+	    });
+	});
+	
+	/* UPDATE */
+	$('#test-btn').click(function(){
+		var search = {};
+		search['keyword'] = "london";
+		$.ajax({
+	        type: "POST",
+	        contentType: "application/json",
+	        url: "/api/update",
+	        data: JSON.stringify(search),
+	        dataType: 'json',
+	        cache: false,
+	        timeout: 600000,
+	        success: function (response) {
+	        	
+	        }
+	    });
+	});
 });
-
-function startStreaming() {
-    search_keyword = $("#keyword-control").val();
-    $("#btn-search").prop("disabled", true);
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/search",
-        data: {keyword: search_keyword},
-        dataType: 'text',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            update(search_keyword);
-            $("#btn-search").prop("disabled", false);
-        }
-    });
-}
-
-function update(keyword){
-	$.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/update",
-        data: {keyword: keyword},
-        dataType: 'text',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            update(search_keyword);
-            $("#btn-search").prop("disabled", false);
-        }
-    });
-}
