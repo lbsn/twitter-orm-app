@@ -1,2 +1,12 @@
-<table>
+<table class="table" id="tweet-table">
+	<thead>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</thead>
+	<tbody>
+		
+	</tbody>
+
 </table>

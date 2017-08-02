@@ -8,6 +8,7 @@
     
 <link rel="stylesheet"
 	href="webjars/bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+<link rel="stylesheet" href="webjars/datatables/1.10.12/css/jquery.dataTables.min.css"></link>
 <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
@@ -20,6 +21,8 @@
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
 			<div class="col-md-10 tweets-container" id="tweets-container" data-streaming="true">
 				<div id="feedback"><a href="#" id="test-btn">update</button></div>
+				<%-- Include tweets table --%>
+				<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
 			</div>
 		</div>
 	</div>
@@ -28,6 +31,8 @@
 	<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
 	<script type="text/javascript"
 		src="webjars/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+	<script type="text/javascript"
+		src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" src="js/main.js"></script>
 	
 </body>
