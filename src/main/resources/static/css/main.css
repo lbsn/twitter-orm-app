@@ -17,3 +17,8 @@ body{
 .search-input{
 	margin-bottom:5px;
 }
+
+/* TWEETs LIST */
+.card-block{
+	padding:0;
+}

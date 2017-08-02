@@ -14,7 +14,7 @@ $(document).ready(function(){
 		
 		var html = "";
 		html += "<div class='card'>";
-		html += "<div class='card-block p-0'>";
+		html += "<div class='card-block tweet-card'>";
 		html += "<div class='tweet-header text-right " + sentColor + "'>";
         html += tweetDate;
         html += "</div>"; // Close header
@@ -26,6 +26,8 @@ $(document).ready(function(){
         html += "</div>"; // Close footer
         html += "</div>"; // Close card-block
         html += "</div>"; // Close card
+        
+        return html;
 	}
 
 	/* DATATABLE */
@@ -54,7 +56,7 @@ $(document).ready(function(){
 		"columns": [
 			{ "data": "id" },
 			{ "data": "text",
-			//"render": tweetCardRender
+			"render": tweetCardRender
 			}
 			]
 	});

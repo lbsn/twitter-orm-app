@@ -19,20 +19,29 @@
 		<div class="row">
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
+			
+			<!-- Tweets container -->
 			<div class="col-md-10 tweets-container" id="tweets-container" data-streaming="true">
-				<div id="feedback"><a href="#" id="test-btn">update</button></div>
+				<div class="card">
+                  <div class="card-block">
+                     <h4 class="card-title">Keyword</h4>
+                  </div>
+               </div>
 				<%-- Include tweets table --%>
 				<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
 			</div>
 		</div>
 	</div>
 
-
-	<script type="text/javascript" src="webjars/jquery/2.1.1/jquery.min.js"></script>
+	<!-- jQuery -->
+	<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
+	<!-- Bootstrap js-->
 	<script type="text/javascript"
 		src="webjars/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+	<!-- Datatable js-->
 	<script type="text/javascript"
 		src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+	<!-- Main js-->
 	<script type="text/javascript" src="js/main.js"></script>
 	
 </body>
