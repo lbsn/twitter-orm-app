@@ -16,7 +16,7 @@
 	<%-- Include header --%>
 	<%@ include file="/WEB-INF/include/header.jspf"%>
 	<div class="container-fluid">
-		<div class="row">
+		<div class="row" data-ng-app="tweetApp" data-ng-controller="tweetCtrl">
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
 			
@@ -24,7 +24,7 @@
 			<div class="col-md-10 tweets-container" id="tweets-container" data-streaming="true">
 				<div class="card">
                   <div class="card-block">
-                     <h4 class="card-title">Keyword</h4>
+                     <h4 class="card-title">{{content.keyword}}</h4>
                   </div>
                </div>
 				<%-- Include tweets table --%>
@@ -38,9 +38,8 @@
 	<!-- Bootstrap js-->
 	<script type="text/javascript"
 		src="webjars/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-	<!-- Datatable js-->
-	<script type="text/javascript"
-		src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+	<!-- AngularJS -->
+	<script type="text/javascript" src="webjars/angularjs/1.6.4/angular.min.js"></script>
 	<!-- Main js-->
 	<script type="text/javascript" src="js/main.js"></script>
 	

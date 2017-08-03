@@ -1,7 +1,7 @@
-<form  class="form" id="search-form">
+<form  class="form" id="search-form" data-ng-submit="startStreaming()">
 	<div class="form-group">
 		<label path="keyword" for="keyword-control">Search</label>
-		<input path="keyword" class="form-control search-input" type="text" id="keyword-control"/>
+		<input path="keyword" class="form-control search-input" type="text" id="keyword-control" data-ng-model="keyword"/>
 	</div>
 	<div class="form-group">
 		<button class="btn btn-primary search-btn" id="btn-search">Submit</button>
