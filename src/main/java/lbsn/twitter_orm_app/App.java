@@ -1,18 +1,11 @@
 package lbsn.twitter_orm_app;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
-
-import lbsn.twitter_orm_app.domain.TweetEntity;
-import lbsn.twitter_orm_app.repository.TweetDao;
-import lbsn.twitter_orm_app.service.TweetStream;
 
 @EnableAsync
 @EnableMongoRepositories

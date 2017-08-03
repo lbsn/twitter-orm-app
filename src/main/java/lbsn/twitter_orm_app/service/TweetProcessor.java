@@ -17,6 +17,8 @@ public class TweetProcessor implements Runnable{
 	private TweetDao tweetDao;
 	@Autowired
 	SentimentClassifier sentClassifier;
+	@Autowired
+	RepDimClassifier repDimClassifier;
 	
 	private final BlockingQueue<Tweet> queue;
 	private String keyword;
@@ -35,16 +37,22 @@ public class TweetProcessor implements Runnable{
 			}
 			catch(InterruptedException e){
 				e.printStackTrace();
+			} 
+			catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}			
 	}
 	
-	public void process(Tweet tweet){
+	public void process(Tweet tweet) throws Exception{
 		TweetEntity entity = new TweetEntity();
 		// Set keyword
 		entity.setKeyword(this.keyword);
 		// Set sentiment
-		entity.setSentiment(this.scoreSentiment(tweet.getText()));
+		entity.setSentiment(this.computeSentiment(tweet.getText()));
+		// Set reputation dimension
+		entity.setRepDimension(this.computeRepDim(tweet.getText()));
 		// Set text
 		entity.setText(tweet.getText());
 		
@@ -56,7 +64,16 @@ public class TweetProcessor implements Runnable{
 	/**
 	 * Sentiment classification
 	 */
-	private String scoreSentiment(String text){
+	private String computeSentiment(String text){
 		return this.sentClassifier.score(text);
+	}
+	
+	/**
+	 * Reputation dimension classification
+	 * @throws Exception 
+	 */
+	private String computeRepDim(String text) throws Exception{
+		this.repDimClassifier.makeInstance(text);
+		return this.repDimClassifier.classify();
 	}
 }
