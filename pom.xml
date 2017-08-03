@@ -5,10 +5,15 @@
 	<groupId>lbsn</groupId>
 	<artifactId>twitter-orm-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 
-	<name>spring-example</name>
-	<description>A simple demo application for the spring-boot framework</description>
+	<name>TwitterORM</name>
+	<description>MSc Software Devolpment - Master Project</description>
+	<developers>
+		<developer>
+			<name>Luca Bisin</name>
+		</developer>
+	</developers>
+	<inceptionYear>2017</inceptionYear>	
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -19,8 +24,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<start-class>lbsn.spring_example.App</start-class>
+		<start-class>lbsn.twitter_orm_app.App</start-class>
 	</properties>
+	
 	<!-- Local repository on github -->
 	<repositories>
 		<repository>
@@ -92,6 +98,12 @@
 			<groupId>it.unimi.dsi</groupId>
 			<artifactId>fastutil</artifactId>
 			<version>7.0.13</version>
+		</dependency>
+		<!-- Snowball stemmer -->
+		<dependency>
+			<groupId>com.github.rholder</groupId>
+			<artifactId>snowball-stemmer</artifactId>
+			<version>1.3.0.581.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/edu.cmu.cs/ark-tweet-nlp -->
 		<dependency>

@@ -73,7 +73,19 @@ public class TweetProcessor implements Runnable{
 	 * @throws Exception 
 	 */
 	private String computeRepDim(String text) throws Exception{
-		this.repDimClassifier.makeInstance(text);
+		// Text preprocessing
+		TweetCleanerConfiguration cleanerConfig = new TweetCleanerConfiguration.
+				Builder().
+				url(CleanOptions.URL.REMOVE).
+				changeCase(CleanOptions.CHANGE_CASE.RETAIN).
+				number(CleanOptions.NUMBER.RETAIN).
+				emoticon(CleanOptions.EMOTICON.REMOVE).
+				stemming(CleanOptions.STEMMING.TRUE).
+				stopwords(CleanOptions.STOPWORDS.TRUE).
+				build();
+
+		TweetCleaner tc = new TweetCleaner(cleanerConfig);
+		this.repDimClassifier.makeInstance(tc.clean(text));
 		return this.repDimClassifier.classify();
 	}
 }
