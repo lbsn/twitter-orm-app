@@ -8,12 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lbsn.twitter_orm_app.domain.TweetEntity;
+import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetDao;
+import lbsn.twitter_orm_app.repository.TweetUserDao;
+import lbsn.twitter_orm_app.service.TweetSearch;
 
 @Controller
 public class IndexController{
-	@Autowired
-	private TweetDao tweetDao;
 	
 	@RequestMapping(value={"/", "/home"})
 	public String index(){

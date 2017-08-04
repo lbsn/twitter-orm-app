@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.social.twitter.api.Tweet;
 import org.springframework.social.twitter.api.Twitter;
+import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.stereotype.Service;
+
+import lbsn.twitter_orm_app.domain.TweetUserEntity;
 
 @Service
 @ConfigurationProperties(prefix = "twitter")
@@ -31,6 +34,10 @@ public final class TweetSearch {
 				this.ACCESS_TOKEN,
 				this.ACCESS_SECRET
 				);
+	}
+	
+	public TwitterProfile searchProfile(String screeName){
+		return this.twitter.userOperations().getUserProfile(screeName);
 	}
 	
 	public List<Tweet> search(){

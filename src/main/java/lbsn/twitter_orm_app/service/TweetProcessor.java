@@ -8,13 +8,17 @@ import org.springframework.social.twitter.api.Tweet;
 import org.springframework.stereotype.Component;
 
 import lbsn.twitter_orm_app.domain.TweetEntity;
+import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetDao;
+import lbsn.twitter_orm_app.repository.TweetUserDao;
 
 @Component
 @Scope("prototype")
 public class TweetProcessor implements Runnable{
 	@Autowired
 	private TweetDao tweetDao;
+	@Autowired
+	private TweetUserDao tweetUserDao;
 	@Autowired
 	SentimentClassifier sentClassifier;
 	@Autowired
@@ -47,6 +51,7 @@ public class TweetProcessor implements Runnable{
 	
 	public void process(Tweet tweet) throws Exception{
 		TweetEntity entity = new TweetEntity();
+		TweetUserEntity user = new TweetUserEntity(tweet.getUser());
 		// Set keyword
 		entity.setKeyword(this.keyword);
 		// Set sentiment
@@ -55,9 +60,10 @@ public class TweetProcessor implements Runnable{
 		entity.setRepDimension(this.computeRepDim(tweet.getText()));
 		// Set text
 		entity.setText(tweet.getText());
-		
-		// Save
+		// Save tweet
 		this.tweetDao.save(entity);
+		// Save tweet user
+		this.tweetUserDao.save(user);
 		System.out.println("saved for keyword: " + this.keyword);
 	}
 	

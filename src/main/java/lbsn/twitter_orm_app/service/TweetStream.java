@@ -27,7 +27,7 @@ import lbsn.twitter_orm_app.repository.TweetDao;
 
 @Service
 @ConfigurationProperties(prefix = "twitter")
-public final class TweetStream implements StreamListener, Runnable{
+public class TweetStream implements StreamListener, Runnable{
 	private static final String CONSUMER_KEY = "EUCjmzK9zUx1LRaD6eSGjailF";
 	private static final String CONSUMER_SECRET = "wotBftJjZCceKHGoj29UHv2jq9IL4Mfwrcfpo6OXHWdSNAXfr8";
 	private static final String ACCESS_TOKEN = "875757581498798081-1Ptkb4NAF2vPms4YJpqbD8q3gE2HWjJ";

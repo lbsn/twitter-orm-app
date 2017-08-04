@@ -13,7 +13,7 @@
 			<name>Luca Bisin</name>
 		</developer>
 	</developers>
-	<inceptionYear>2017</inceptionYear>	
+	<inceptionYear>2017</inceptionYear>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -26,7 +26,7 @@
 		<java.version>1.8</java.version>
 		<start-class>lbsn.twitter_orm_app.App</start-class>
 	</properties>
-	
+
 	<!-- Local repository on github -->
 	<repositories>
 		<repository>
@@ -41,6 +41,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
