@@ -63,7 +63,6 @@ public class TweetStream implements StreamListener, Runnable{
 					(TweetProcessor) this.beanFactory.getBean("tweetProcessor", this.queue, this.keyword)
 					);
 		}
-
 		run();
 	}
 	

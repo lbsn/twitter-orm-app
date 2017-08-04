@@ -53,14 +53,39 @@ public class RepDimClassifier {
 
 		// Add text value
 		Instance instance = new DenseInstance(2);
-		instance.setValue(text, tweetText);
+		instance.setDataset(instances);
+		instance.setValue(text, this.cleanText(tweetText));
 		instances.add(instance);
 	}
+	
+	private String cleanText(String text){
+		TweetCleanerConfiguration cleanerConfig = new TweetCleanerConfiguration.
+				Builder().
+				url(CleanOptions.URL.REMOVE).
+				changeCase(CleanOptions.CHANGE_CASE.RETAIN).
+				number(CleanOptions.NUMBER.RETAIN).
+				emoticon(CleanOptions.EMOTICON.REMOVE).
+				stemming(CleanOptions.STEMMING.FALSE).
+				stopwords(CleanOptions.STOPWORDS.TRUE).
+				build();
 
-	public String classify() throws Exception{
-		double pred = this.model.classifyInstance(this.instances.instance(0));
-		return this.instances.classAttribute().value((int) pred);
+		TweetCleaner tc = new TweetCleaner(cleanerConfig);
+		return tc.clean(text);
 	}
+
+	public String classify(){
+		double pred;
+		try {
+			pred = this.model.classifyInstance(this.instances.instance(0));
+			return this.instances.classAttribute().value((int) pred);
+		} 
+		catch (Exception e) {
+			System.out.println("------------- EXCEPTION: " + 
+		this.instances.instance(0).toString(this.instances.attribute("text")));
+			e.printStackTrace();
+			return null;
+		}
+	}	
 
 }
 

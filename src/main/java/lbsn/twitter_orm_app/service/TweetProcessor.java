@@ -5,6 +5,7 @@ import java.util.concurrent.BlockingQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.social.twitter.api.Tweet;
+import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Component;
 
 import lbsn.twitter_orm_app.domain.TweetEntity;
@@ -23,6 +24,8 @@ public class TweetProcessor implements Runnable{
 	SentimentClassifier sentClassifier;
 	@Autowired
 	RepDimClassifier repDimClassifier;
+	@Autowired
+	AuthRankClassifier authRankClassifier;
 	
 	private final BlockingQueue<Tweet> queue;
 	private String keyword;
@@ -34,7 +37,7 @@ public class TweetProcessor implements Runnable{
 	
 	@Override
 	public void run() {
-		while(true){
+		while(!Thread.currentThread().isInterrupted()){
 			try{
 				Tweet tweet = this.queue.take();
 				this.process(tweet);
@@ -49,9 +52,13 @@ public class TweetProcessor implements Runnable{
 		}			
 	}
 	
+	public void stop(){
+		Thread.currentThread().interrupt();
+	}
+	
 	public void process(Tweet tweet) throws Exception{
 		TweetEntity entity = new TweetEntity();
-		TweetUserEntity user = new TweetUserEntity(tweet.getUser());
+		
 		// Set keyword
 		entity.setKeyword(this.keyword);
 		// Set sentiment
@@ -62,6 +69,10 @@ public class TweetProcessor implements Runnable{
 		entity.setText(tweet.getText());
 		// Save tweet
 		this.tweetDao.save(entity);
+		
+		TweetUserEntity user = new TweetUserEntity(tweet.getUser());
+		// Set author influence
+		user.setInfluencer(this.computeAuthInfluence(user.getProfile()));
 		// Save tweet user
 		this.tweetUserDao.save(user);
 		System.out.println("saved for keyword: " + this.keyword);
@@ -79,19 +90,16 @@ public class TweetProcessor implements Runnable{
 	 * @throws Exception 
 	 */
 	private String computeRepDim(String text) throws Exception{
-		// Text preprocessing
-		TweetCleanerConfiguration cleanerConfig = new TweetCleanerConfiguration.
-				Builder().
-				url(CleanOptions.URL.REMOVE).
-				changeCase(CleanOptions.CHANGE_CASE.RETAIN).
-				number(CleanOptions.NUMBER.RETAIN).
-				emoticon(CleanOptions.EMOTICON.REMOVE).
-				stemming(CleanOptions.STEMMING.TRUE).
-				stopwords(CleanOptions.STOPWORDS.TRUE).
-				build();
-
-		TweetCleaner tc = new TweetCleaner(cleanerConfig);
-		this.repDimClassifier.makeInstance(tc.clean(text));
+		this.repDimClassifier.makeInstance(text);
 		return this.repDimClassifier.classify();
+	}
+	
+	/**
+	 * Author influence classficiation
+	 * @throws Exception 
+	 */
+	private boolean computeAuthInfluence(TwitterProfile profile) throws Exception{
+		this.authRankClassifier.makeInstance(profile);
+		return this.authRankClassifier.classify();
 	}
 }

@@ -12,9 +12,17 @@ public class TweetUserEntity{
 	@Id
 	private Long id;
 	private TwitterProfile profile;
+	private boolean isInfluencer;
 	
+	/**
+	 * Default constructor
+	 */
 	public TweetUserEntity(){}
 	
+	/**
+	 * Constructor with TwitterProfile parameter
+	 * @param profile
+	 */
 	public TweetUserEntity(TwitterProfile profile){
 		this.id = profile.getId();
 		this.setProfile(profile);
@@ -29,5 +37,13 @@ public class TweetUserEntity{
 
 	public void setProfile(TwitterProfile profile) {
 		this.profile = profile;
+	}
+
+	public boolean isInfluencer() {
+		return isInfluencer;
+	}
+
+	public void setInfluencer(boolean isInfluencer) {
+		this.isInfluencer = isInfluencer;
 	}
 }
