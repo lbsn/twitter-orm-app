@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Service;
 
+import twitter4j.User;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -61,7 +62,7 @@ public class AuthRankClassifier {
 		return dataset;		
 	}
 	
-	public Instances addInstance(Instances dataset, TwitterProfile profile){
+	public Instances addInstance(Instances dataset, User user){
 		// Empty dataset
 		dataset.delete();
 		
@@ -73,41 +74,41 @@ public class AuthRankClassifier {
 		// Set attributes values in instance
 		// Boolean
 		instance.setValue(dataset.attribute("verified"), 
-				String.valueOf(profile.isVerified()));
+				String.valueOf(user.isVerified()));
 		instance.setValue(dataset.attribute("profile_use_background_image"), 
-				String.valueOf(profile.useBackgroundImage()));
+				String.valueOf(user.isProfileUseBackgroundImage()));
 		instance.setValue(dataset.attribute("default_profile"), 
-				String.valueOf(profile.getExtraData().get("default_profile")));
+				String.valueOf(user.isDefaultProfile()));
 		instance.setValue(dataset.attribute("geo_enabled"), 
-				String.valueOf(profile.isGeoEnabled()));
+				String.valueOf(user.isGeoEnabled()));
 		instance.setValue(dataset.attribute("default_profile_image"), 
-				String.valueOf(profile.getExtraData().get("default_profile_image")));
+				String.valueOf(user.isDefaultProfileImage()));
 		instance.setValue(dataset.attribute("notifications"), 
-				String.valueOf(profile.isNotificationsEnabled()));
+				String.valueOf(false));
 		instance.setValue(dataset.attribute("is_translator"), 
-				String.valueOf(profile.isTranslator()));
+				String.valueOf(user.isTranslator()));
 		instance.setValue(dataset.attribute("contributors_enabled"), 
-				String.valueOf(profile.isContributorsEnabled()));
+				String.valueOf(user.isContributorsEnabled()));
 		instance.setValue(dataset.attribute("url_in_profile"), 
-				String.valueOf(profile.getUrl() != null && !profile.getUrl().isEmpty()));
+				String.valueOf(user.getDescriptionURLEntities() != null && user.getDescriptionURLEntities().length != 0));
 		// Numeric
 		instance.setValue(dataset.attribute("followers_count"), 
-				profile.getFollowersCount());
+				user.getFollowersCount());
 		instance.setValue(dataset.attribute("friends_count"), 
-				profile.getFriendsCount());
+				user.getFriendsCount());
 		instance.setValue(dataset.attribute("favourites_count"), 
-				profile.getFavoritesCount());
+				user.getFavouritesCount());
 		instance.setValue(dataset.attribute("statuses_count"), 
-				profile.getStatusesCount());
+				user.getStatusesCount());
 
 		// Description can be missing
-		if(profile.getDescription() == null){
+		if(user.getDescription() == null){
 			instance.setValue(dataset.attribute("description"),
 					Utils.missingValue());
 		}
 		else{
 			instance.setValue(dataset.attribute("description"), 
-					this.cleanDescription(profile.getDescription()));
+					this.cleanDescription(user.getDescription()));
 		}
 		
 		return dataset;

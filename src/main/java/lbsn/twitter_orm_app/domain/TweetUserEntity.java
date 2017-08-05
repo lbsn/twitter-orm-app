@@ -7,11 +7,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.social.twitter.api.TwitterProfile;
 
+import twitter4j.User;
+
 @Document(collection="users")
 public class TweetUserEntity{
 	@Id
 	private Long id;
-	private TwitterProfile profile;
+	private User profile;
 	private boolean isInfluencer;
 	
 	/**
@@ -23,7 +25,7 @@ public class TweetUserEntity{
 	 * Constructor with TwitterProfile parameter
 	 * @param profile
 	 */
-	public TweetUserEntity(TwitterProfile profile){
+	public TweetUserEntity(User profile){
 		this.id = profile.getId();
 		this.setProfile(profile);
 	}
@@ -31,11 +33,11 @@ public class TweetUserEntity{
 		return id;
 	}
 
-	public TwitterProfile getProfile() {
+	public User getProfile() {
 		return profile;
 	}
 
-	public void setProfile(TwitterProfile profile) {
+	public void setProfile(User profile) {
 		this.profile = profile;
 	}
 

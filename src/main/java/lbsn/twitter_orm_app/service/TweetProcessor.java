@@ -12,6 +12,8 @@ import lbsn.twitter_orm_app.domain.TweetEntity;
 import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetDao;
 import lbsn.twitter_orm_app.repository.TweetUserDao;
+import twitter4j.Status;
+import twitter4j.User;
 import weka.core.Instances;
 
 @Component
@@ -27,20 +29,19 @@ public class TweetProcessor implements Runnable{
 	RepDimClassifier repDimClassifier;
 	@Autowired
 	AuthRankClassifier authRankClassifier;
+	@Autowired
+	TweetStream tweetStream;
+	private final BlockingQueue<Status> queue;
 	
-	private final BlockingQueue<Tweet> queue;
-	private String keyword;
-	
-	public TweetProcessor(BlockingQueue<Tweet> queue, String keyword){
+	public TweetProcessor(BlockingQueue<Status> queue){
 		this.queue = queue;
-		this.keyword = keyword;
 	}
 	
 	@Override
 	public void run() {
 		while(!Thread.currentThread().isInterrupted()){
 			try{
-				Tweet tweet = this.queue.take();
+				Status tweet = this.queue.take();
 				this.process(tweet);
 			}
 			catch(InterruptedException e){
@@ -53,15 +54,11 @@ public class TweetProcessor implements Runnable{
 		}			
 	}
 	
-	public void stop(){
-		Thread.currentThread().interrupt();
-	}
-	
-	public void process(Tweet tweet) throws Exception{
+	public void process(Status tweet) throws Exception{
 		TweetEntity entity = new TweetEntity();
 		
 		// Set keyword
-		entity.setKeyword(this.keyword);
+		entity.setKeyword(this.tweetStream.getKeyword());
 		// Set sentiment
 		entity.setSentiment(this.computeSentiment(tweet.getText()));
 		// Set reputation dimension
@@ -76,7 +73,7 @@ public class TweetProcessor implements Runnable{
 		user.setInfluencer(this.computeAuthInfluence(user.getProfile()));
 		// Save tweet user
 		this.tweetUserDao.save(user);
-		System.out.println("saved for keyword: " + this.keyword);
+		System.out.println("saved for keyword: " + this.tweetStream.getKeyword());
 	}
 	
 	/**
@@ -100,9 +97,9 @@ public class TweetProcessor implements Runnable{
 	 * Author influence classficiation
 	 * @throws Exception 
 	 */
-	private boolean computeAuthInfluence(TwitterProfile profile) throws Exception{
+	private boolean computeAuthInfluence(User user) throws Exception{
 		Instances dataset = this.authRankClassifier.makeDataset();
-		dataset = this.authRankClassifier.addInstance(dataset, profile);
+		dataset = this.authRankClassifier.addInstance(dataset, user);
 		return this.authRankClassifier.classify(dataset);
 	}
 }
