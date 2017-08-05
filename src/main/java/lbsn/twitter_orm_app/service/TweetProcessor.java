@@ -12,6 +12,7 @@ import lbsn.twitter_orm_app.domain.TweetEntity;
 import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetDao;
 import lbsn.twitter_orm_app.repository.TweetUserDao;
+import weka.core.Instances;
 
 @Component
 @Scope("prototype")
@@ -90,8 +91,9 @@ public class TweetProcessor implements Runnable{
 	 * @throws Exception 
 	 */
 	private String computeRepDim(String text) throws Exception{
-		this.repDimClassifier.makeInstance(text);
-		return this.repDimClassifier.classify();
+		Instances dataset = this.repDimClassifier.makeDataset();
+		dataset = this.repDimClassifier.addInstance(dataset, text);
+		return this.repDimClassifier.classify(dataset);
 	}
 	
 	/**
@@ -99,7 +101,8 @@ public class TweetProcessor implements Runnable{
 	 * @throws Exception 
 	 */
 	private boolean computeAuthInfluence(TwitterProfile profile) throws Exception{
-		this.authRankClassifier.makeInstance(profile);
-		return this.authRankClassifier.classify();
+		Instances dataset = this.authRankClassifier.makeDataset();
+		dataset = this.authRankClassifier.addInstance(dataset, profile);
+		return this.authRankClassifier.classify(dataset);
 	}
 }

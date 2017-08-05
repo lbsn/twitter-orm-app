@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import lbsn.twitter_orm_app.domain.TweetUserEntity;
+import lbsn.twitter_orm_app.repository.TweetDao;
+import weka.core.Instances;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RepDimClassifierTest {
@@ -17,9 +21,16 @@ public class RepDimClassifierTest {
 	private String tweetToTest = "Berlin street artist group cleverly undo swastika graffiti https://t.co/JEnPhzdn3s";
 	
 	@Test
+	public void testCreateInstances() throws Exception{
+		Instances dataset = this.classifier.makeDataset();
+		assertNotNull("Dataset is null", dataset);		
+	}
+	
+	@Test
 	public void testClassify() throws Exception{
-		this.classifier.makeInstance(tweetToTest);
-		String dimension = this.classifier.classify();
+		Instances dataset = this.classifier.makeDataset();
+		dataset = this.classifier.addInstance(dataset, this.tweetToTest);
+		String dimension = this.classifier.classify(dataset);
 		assertNotNull("Dimension is null", dimension);
 		assertTrue("Dimension is empty", dimension.length() != 0);
 	}

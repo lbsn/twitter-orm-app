@@ -19,13 +19,8 @@ import weka.core.Utils;
 @Service
 public class AuthRankClassifier {
 	private final String MODEL_NAME = "authRank.model";
-	private FilteredClassifier model;
-	private Instances instances;
-
-	public Instances getInstances() {
-		return instances;
-	}
-
+	private final FilteredClassifier model;
+	
 	public AuthRankClassifier() throws FileNotFoundException, Exception{
 		String modelPath = this.getClass().
 				getResource("/models/" + this.MODEL_NAME).
@@ -34,7 +29,7 @@ public class AuthRankClassifier {
 				read(new FileInputStream(modelPath));
 	}
 
-	public void makeInstance(TwitterProfile profile){
+	public Instances makeDataset(){
 		ArrayList<Attribute> attributes = new ArrayList<Attribute>();
 		// Boolean
 		attributes.add(new Attribute("verified", Arrays.asList("true","false")));
@@ -60,54 +55,62 @@ public class AuthRankClassifier {
 		attributes.add(new Attribute("opinion_maker", Arrays.asList("non_opinion_maker","opinion_maker")));
 		
 		// Creates Instances object
-		this.instances = new Instances("authRankRelation", attributes, 0);
-		this.instances.setClass(this.instances.attribute("opinion_maker"));
+		Instances dataset = new Instances("authRankRelation", attributes, 0);
+		dataset.setClass(dataset.attribute("opinion_maker"));
 
-		// Create instance and add it to dataset
-		Instance instance = new DenseInstance(attributes.size());
-		instances.add(instance);
-		instance.setDataset(instances);
+		return dataset;		
+	}
+	
+	public Instances addInstance(Instances dataset, TwitterProfile profile){
+		// Empty dataset
+		dataset.delete();
 		
+		// Create instance and add it to dataset
+		Instance instance = new DenseInstance(dataset.numAttributes());
+		instance.setDataset(dataset);
+		dataset.add(instance);
+
 		// Set attributes values in instance
 		// Boolean
-		instance.setValue(instances.attribute("verified"), 
+		instance.setValue(dataset.attribute("verified"), 
 				String.valueOf(profile.isVerified()));
-		instance.setValue(instances.attribute("profile_use_background_image"), 
+		instance.setValue(dataset.attribute("profile_use_background_image"), 
 				String.valueOf(profile.useBackgroundImage()));
-		instance.setValue(instances.attribute("default_profile"), 
+		instance.setValue(dataset.attribute("default_profile"), 
 				String.valueOf(profile.getExtraData().get("default_profile")));
-		instance.setValue(instances.attribute("geo_enabled"), 
+		instance.setValue(dataset.attribute("geo_enabled"), 
 				String.valueOf(profile.isGeoEnabled()));
-		instance.setValue(instances.attribute("default_profile_image"), 
+		instance.setValue(dataset.attribute("default_profile_image"), 
 				String.valueOf(profile.getExtraData().get("default_profile_image")));
-		instance.setValue(instances.attribute("notifications"), 
+		instance.setValue(dataset.attribute("notifications"), 
 				String.valueOf(profile.isNotificationsEnabled()));
-		instance.setValue(instances.attribute("is_translator"), 
+		instance.setValue(dataset.attribute("is_translator"), 
 				String.valueOf(profile.isTranslator()));
-		instance.setValue(instances.attribute("contributors_enabled"), 
+		instance.setValue(dataset.attribute("contributors_enabled"), 
 				String.valueOf(profile.isContributorsEnabled()));
-		instance.setValue(instances.attribute("url_in_profile"), 
+		instance.setValue(dataset.attribute("url_in_profile"), 
 				String.valueOf(profile.getUrl() != null && !profile.getUrl().isEmpty()));
 		// Numeric
-		instance.setValue(instances.attribute("followers_count"), 
+		instance.setValue(dataset.attribute("followers_count"), 
 				profile.getFollowersCount());
-		instance.setValue(instances.attribute("friends_count"), 
+		instance.setValue(dataset.attribute("friends_count"), 
 				profile.getFriendsCount());
-		instance.setValue(instances.attribute("favourites_count"), 
+		instance.setValue(dataset.attribute("favourites_count"), 
 				profile.getFavoritesCount());
-		instance.setValue(instances.attribute("statuses_count"), 
+		instance.setValue(dataset.attribute("statuses_count"), 
 				profile.getStatusesCount());
-		
+
 		// Description can be missing
 		if(profile.getDescription() == null){
-			instance.setValue(instances.attribute("description"),
+			instance.setValue(dataset.attribute("description"),
 					Utils.missingValue());
 		}
 		else{
-			instance.setValue(instances.attribute("description"), 
+			instance.setValue(dataset.attribute("description"), 
 					this.cleanDescription(profile.getDescription()));
 		}
 		
+		return dataset;
 	}
 	
 	private String cleanDescription(String description){
@@ -120,9 +123,9 @@ public class AuthRankClassifier {
 				
 	}
 	
-	public boolean classify() throws Exception{
-		double pred = this.model.classifyInstance(this.instances.instance(0));
-		String classValue = this.instances.classAttribute().value((int) pred);
+	public boolean classify(Instances dataset) throws Exception{
+		double pred = this.model.classifyInstance(dataset.instance(0));
+		String classValue = dataset.classAttribute().value((int) pred);
 		return (classValue == "opinion_maker") ? true : false;
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetUserDao;
+import weka.core.Instances;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,16 +24,16 @@ public class AuthRankClassifierTest {
 	
 	@Test
 	public void testCreateInstances() throws Exception{
-		TweetUserEntity user = this.tweetUserDao.findAll().get(0);
-		this.classifier.makeInstance(user.getProfile());
-		assertNotNull("Instances is null", this.classifier.getInstances());		
+		Instances dataset = this.classifier.makeDataset();
+		assertNotNull("Dataset is null", dataset);		
 	}
 	
 	@Test
 	public void testClassify() throws Exception{
 		TweetUserEntity user = this.tweetUserDao.findAll().get(0);
-		this.classifier.makeInstance(user.getProfile());
-		boolean actual = this.classifier.classify();
+		Instances dataset = this.classifier.makeDataset();
+		dataset = this.classifier.addInstance(dataset, user.getProfile());
+		boolean actual = this.classifier.classify(dataset);
 		assertNotNull("Predication is null", actual);
 	}
 }

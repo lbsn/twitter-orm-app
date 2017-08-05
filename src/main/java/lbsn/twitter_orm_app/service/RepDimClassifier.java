@@ -16,9 +16,8 @@ import weka.core.SerializationHelper;
 @Service
 public class RepDimClassifier {
 	private final String MODEL_NAME = "repDim.model";
-	private FilteredClassifier model;
-	private Instances instances;
-
+	private final FilteredClassifier model;
+	
 	public RepDimClassifier() throws FileNotFoundException, Exception{
 		String modelPath = this.getClass().
 				getResource("/models/" + this.MODEL_NAME).
@@ -27,7 +26,7 @@ public class RepDimClassifier {
 				read(new FileInputStream(modelPath));
 	}
 	
-	public void makeInstance(String tweetText){
+	public Instances makeDataset(){
 		// Creates attributes
 		Attribute text = new Attribute("text", true);
 
@@ -48,14 +47,22 @@ public class RepDimClassifier {
 		attr.add(dimension);
 
 		// Creates Instances object
-		this.instances = new Instances("repDimRelation", attr, 0);
-		this.instances.setClass(this.instances.attribute("dimension"));
+		Instances dataset = new Instances("repDimRelation", attr, 0);
+		dataset.setClass(dataset.attribute("dimension"));
 
-		// Add text value
+		return dataset;
+	}
+	
+	public Instances addInstance(Instances dataset, String tweetText){
+		// Delete existing instances
+		dataset.delete();
+		
+		// Add new instance
 		Instance instance = new DenseInstance(2);
-		instance.setDataset(instances);
-		instance.setValue(text, this.cleanText(tweetText));
-		instances.add(instance);
+		instance.setDataset(dataset);
+		instance.setValue(dataset.attribute("text"), this.cleanText(tweetText));
+		dataset.add(instance);
+		return dataset;
 	}
 	
 	private String cleanText(String text){
@@ -73,15 +80,14 @@ public class RepDimClassifier {
 		return tc.clean(text);
 	}
 
-	public String classify(){
+	public String classify(Instances dataset){
 		double pred;
 		try {
-			pred = this.model.classifyInstance(this.instances.instance(0));
-			return this.instances.classAttribute().value((int) pred);
+			pred = this.model.classifyInstance(dataset.instance(0));
+			return dataset.classAttribute().value((int) pred);
 		} 
 		catch (Exception e) {
-			System.out.println("------------- EXCEPTION: " + 
-		this.instances.instance(0).toString(this.instances.attribute("text")));
+			System.out.println("------------- EXCEPTION REPDIM: ");
 			e.printStackTrace();
 			return null;
 		}
