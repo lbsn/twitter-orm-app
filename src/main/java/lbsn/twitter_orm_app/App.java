@@ -18,6 +18,7 @@ public class App {
 		taskExecutor.setCorePoolSize(5);
 		taskExecutor.setMaxPoolSize(10);
 		taskExecutor.setQueueCapacity(30);
+		taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
 		return taskExecutor;
 	}
 	

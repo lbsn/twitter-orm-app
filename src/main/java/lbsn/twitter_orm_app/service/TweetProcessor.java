@@ -39,18 +39,20 @@ public class TweetProcessor implements Runnable{
 	
 	@Override
 	public void run() {
-		while(!Thread.currentThread().isInterrupted()){
-			try{
-				Status tweet = this.queue.take();
+		while(!Thread.interrupted()){
+			Status tweet;
+			try {
+				tweet = this.queue.take();
 				this.process(tweet);
-			}
-			catch(InterruptedException e){
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
 			catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 		}			
 	}
 	
