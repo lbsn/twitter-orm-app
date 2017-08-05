@@ -1,5 +1,7 @@
 package lbsn.twitter_orm_app.domain;
 
+import java.util.Date;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.social.twitter.api.Tweet;
@@ -8,6 +10,7 @@ import org.springframework.social.twitter.api.Tweet;
 public class TweetEntity{
 	@Id
 	private String id;
+	private Date createdAt;
 	private String text;
 	private String sentiment;
 	private String repDimension;
@@ -39,6 +42,12 @@ public class TweetEntity{
 	}
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
+	}
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
 	}
 	
 }

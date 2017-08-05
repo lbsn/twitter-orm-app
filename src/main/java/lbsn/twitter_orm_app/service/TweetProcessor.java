@@ -63,6 +63,8 @@ public class TweetProcessor implements Runnable{
 		entity.setSentiment(this.computeSentiment(tweet.getText()));
 		// Set reputation dimension
 		entity.setRepDimension(this.computeRepDim(tweet.getText()));
+		// Set createdAt
+		entity.setCreatedAt(tweet.getCreatedAt());
 		// Set text
 		entity.setText(tweet.getText());
 		// Save tweet
