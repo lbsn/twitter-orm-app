@@ -7,7 +7,8 @@
 	</thead>
 	<tbody>
 		<tr data-ng-repeat="tweet in content.tweets">
-			<td>{{tweet.text}}</td>
+			<td>user info</td>
+			<td tweet-card></td>
 		</tr>
 	</tbody>
 
