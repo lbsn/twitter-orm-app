@@ -16,12 +16,12 @@
 	<%-- Include header --%>
 	<%@ include file="/WEB-INF/include/header.jspf"%>
 	<div class="container-fluid">
-		<div class="row" data-ng-app="tweetApp" data-ng-controller="tweetCtrl">
+		<div class="row" data-ng-app="tweetApp" data-ng-controller="appCtrl">
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
 			
 			<!-- Tweets container -->
-			<div class="col-md-10 tweets-container" id="tweets-container" data-streaming="true">
+			<div class="col-md-8 tweets-container" id="tweets-container">
 				<div class="card">
                   <div class="card-block">
                      <h4 class="card-title">{{content.keyword}}</h4>
@@ -41,7 +41,7 @@
 	<!-- AngularJS -->
 	<script type="text/javascript" src="webjars/angularjs/1.6.4/angular.min.js"></script>
 	<!-- Main js-->
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
 	
 </body>
 </html>

@@ -1,9 +1,9 @@
 var tweetApp = angular.module("tweetApp", []);
 
 /**
- * Tweet Controller
+ * App controller
  */
-tweetApp.controller("tweetCtrl", function($scope, $http){
+tweetApp.controller("appCtrl", function($scope, $http){
 	$scope.keyword;
 	
 	/* Start streaming for a given keyword */
@@ -26,17 +26,32 @@ tweetApp.controller("tweetCtrl", function($scope, $http){
 	$scope.updateTable = function(search){
 		$http.post("/api/update", search).
 		then(function(response){
-			$scope.content = response.data;
+			var tweets = response.data['tweets'];
+			
+			// Convert sentiment from int to string
+			angular.forEach(tweets, function(tweet, index){
+				switch(tweet.sentiment){
+				case "0":
+					tweet.sentiment = "neutral";
+					break;
+				case "1":
+					tweet.sentiment = "positive";
+					break;
+				case "-1":
+					tweet.sentiment = "negative";
+					break;
+				}					
+			$scope.tweets = tweets;
+			});
 		});
 	}
 });
-
 /**
  * Tweet card directive
 */
 tweetApp.directive("tweetCard", function(){
 	return{
 		restrict:"A",
-		templateUrl:"/js/tweetCard.tpl.html"
+		templateUrl:"/templates/tweetCard.tpl.html"
 	}
 });

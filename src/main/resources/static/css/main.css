@@ -22,3 +22,15 @@ body{
 .card-block{
 	padding:0;
 }
+.tweet-header{
+	color:white;
+}
+#tweet-table .positive{
+	background-color:#5cb85c;
+}
+#tweet-table .negative{
+	background-color:#d9534f;
+}
+#tweet-table .neutral{
+	background-color:#a6a6a6;
+}

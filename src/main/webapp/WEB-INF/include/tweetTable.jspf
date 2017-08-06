@@ -6,9 +6,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr data-ng-repeat="tweet in content.tweets">
+		<tr data-ng-repeat="tweet in tweets">
 			<td>user info</td>
-			<td tweet-card></td>
+			<td data-tweet-card></td>
 		</tr>
 	</tbody>
 

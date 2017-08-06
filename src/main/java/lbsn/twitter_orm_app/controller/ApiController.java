@@ -41,7 +41,6 @@ public class ApiController {
 		System.out.println("-------------------/UPDATE " + search.getKeyword());
 		AjaxResponse result = new AjaxResponse();
 		List<TweetEntity> tweet = this.tweetDao.findByKeyword(search.getKeyword());
-		
 		result.setKeyword(search.getKeyword());
 		result.setTweets(tweet);
 		return result;
