@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class ClusteringServiceTest {
 	ClusteringService service;
 	
 	@Test
+	@Ignore
 	public void testGetTweetList(){
 		String keyword = "london";
 		Map<String, String> list = service.getTweetList(keyword);
@@ -28,6 +30,7 @@ public class ClusteringServiceTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testCluster() throws Exception{
 		String keyword = "london";
 		Map<String, String> list = service.getTweetList(keyword);
