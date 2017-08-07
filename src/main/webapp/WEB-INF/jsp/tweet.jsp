@@ -24,7 +24,7 @@
 			<div class="col-md-8 tweets-container" id="tweets-container">
 				<div class="card">
                   <div class="card-block">
-                     <h4 class="card-title">{{content.keyword}}</h4>
+                     <h4 class="card-title">{{sentKeyword}}</h4>
                   </div>
                </div>
 				<%-- Include tweets table --%>

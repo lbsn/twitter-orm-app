@@ -4,7 +4,6 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.social.twitter.api.Tweet;
 
 @Document(collection="tweets")
 public class TweetEntity{
@@ -15,6 +14,7 @@ public class TweetEntity{
 	private String sentiment;
 	private String repDimension;
 	private String keyword;
+	private Long userId;
 	
 	public String getText() {
 		return text;
@@ -48,6 +48,12 @@ public class TweetEntity{
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
+	}
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 	
 }

@@ -69,6 +69,8 @@ public class TweetProcessor implements Runnable{
 		entity.setCreatedAt(tweet.getCreatedAt());
 		// Set text
 		entity.setText(tweet.getText());
+		// Set user id
+		entity.setUserId(tweet.getUser().getId());
 		// Save tweet
 		this.tweetDao.save(entity);
 		

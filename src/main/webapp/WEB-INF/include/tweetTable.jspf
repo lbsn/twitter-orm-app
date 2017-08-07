@@ -6,8 +6,8 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr data-ng-repeat="tweet in tweets">
-			<td>user info</td>
+		<tr data-ng-repeat="tweet in tweets | orderBy: 'createdAt':reverse">
+			<td data-user-card></td>
 			<td data-tweet-card></td>
 		</tr>
 	</tbody>

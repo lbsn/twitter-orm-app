@@ -48,4 +48,5 @@ public class TweetUserEntity{
 	public void setInfluencer(boolean isInfluencer) {
 		this.isInfluencer = isInfluencer;
 	}
+	
 }
