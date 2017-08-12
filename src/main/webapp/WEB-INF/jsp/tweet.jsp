@@ -23,13 +23,13 @@
 			<!-- Tweets container -->
 			<div class="col-md-8 tweets-container" id="tweets-container">
 				<div class="row">
-					<div class="card bg-inverse streaming-header" ng-hide="tweets.length == 0">
+					<div class="card bg-inverse streaming-header" data-ng-hide="tweets.length == 0">
 						<h4 class="card-title">Streaming for: 
 							<span class="streaming-keyword">{{sentKeyword}}</span>
-							<span class"list-size">{{tweets.length}}</span>
+							<span class="list-size">{{tweets.length}}</span>
 						</h4>
 						<span>
-							<button ng-click="stopUpdate()">Stop</button>
+							<button data-ng-click="stopUpdate()">Stop</button>
 						</span>
 					</div>
 				</div>

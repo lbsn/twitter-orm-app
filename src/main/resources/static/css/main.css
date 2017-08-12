@@ -60,8 +60,17 @@ streaming-keyword{
 .user-card{
 	border:none;
 }
+.badge-influencer{
+	display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+    position: absolute;
+    right: 0px;
+    font-size: small;
+}
 .profile-name{
-	margin-top:5px;	
+	margin-top:5px;
+	font-size:small;	
 }
 
 /* TWEET CARD */
