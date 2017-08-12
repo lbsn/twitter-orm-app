@@ -3,7 +3,9 @@ var tweetApp = angular.module("tweetApp", ['ui.bootstrap']);
 /**
  * App controller
  */
-tweetApp.controller("appCtrl", function($scope, $http, $filter){
+tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
+	var promise;
+	
 	$scope.keyword = "";
 	$scope.tweets = [];
 	
@@ -18,11 +20,22 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter){
 		}).
 		then(function(response){
 			$scope.sentKeyword = $scope.keyword;
-			setInterval(
-				$scope.updateTable(search),
-				5000
-			);
+			$scope.startUpdate(search);			
 		});
+	}
+	
+	$scope.startUpdate = function(search){
+		$scope.stopUpdate();
+		promise = $interval(
+			function(){
+				$scope.updateTable(search)
+			},
+			5000
+		);
+	}
+	
+	$scope.stopUpdate = function(){
+		$interval.cancel(promise);
 	}
 	
 	/* Update tweet table */
