@@ -1,15 +1,18 @@
-<table class="table" id="tweet-table">
-	<thead>
-		<tr>
-			<td></td>
-			<td></td>
-		</tr>
-	</thead>
-	<tbody>
-		<tr data-ng-repeat="tweet in tweets | orderBy: 'createdAt':reverse">
-			<td data-user-card></td>
-			<td data-tweet-card></td>
-		</tr>
-	</tbody>
-
-</table>
+<div data-ng-controller="paginationCtrl">
+	<ul data-uib-pagination data-total-items="totalItems"
+		data-ng-model="currentPage"></ul>
+	<table class="table-sm" id="tweet-table">
+		<thead>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="tweet in tweetsPerPage | orderBy: 'createdAt':true">
+				<td data-user-card></td>
+				<td data-tweet-card></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

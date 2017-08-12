@@ -18,12 +18,33 @@ body{
 	margin-bottom:5px;
 }
 
-/* TWEETs LIST */
+/* TWEETS CONTAINER */
+.tweets-container{
+	padding:20px;
+}
+
+.streaming-header{
+	padding:10px;
+}
+.streaming-header .card-title{
+	margin-bottom:0px;
+}
+.streaming-header h4{
+	margin:0px;
+}
+streaming-keyword{
+	font-weight:bold;
+	font-style:italic;
+}
+
+/* TWEETS LIST */
 .card-block{
 	padding:0;
 }
 .tweet-header{
 	color:white;
+	padding:2px;
+	font-size:small;
 }
 #tweet-table .positive{
 	background-color:#5cb85c;
@@ -33,4 +54,20 @@ body{
 }
 #tweet-table .neutral{
 	background-color:#a6a6a6;
+}
+
+/* USER CARD */
+.user-card{
+	border:none;
+}
+.profile-name{
+	margin-top:5px;	
+}
+
+/* TWEET CARD */
+.tweet-card{
+	border:none;
+}
+.tweet-text{
+	padding: 3px 0px 5px 0px;
 }

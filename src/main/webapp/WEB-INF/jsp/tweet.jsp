@@ -19,16 +19,21 @@
 		<div class="row" data-ng-app="tweetApp" data-ng-controller="appCtrl">
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
-			
+
 			<!-- Tweets container -->
 			<div class="col-md-8 tweets-container" id="tweets-container">
-				<div class="card">
-                  <div class="card-block">
-                     <h4 class="card-title">{{sentKeyword}}</h4>
-                  </div>
-               </div>
-				<%-- Include tweets table --%>
-				<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
+				<div class="row">
+					<div class="card bg-inverse streaming-header">
+						<h4 class="card-title">Streaming for: 
+							<span class="streaming-keyword">{{sentKeyword}}</span>
+						</h4>
+					</div>
+				</div>
+				<div class="row">
+					<%-- Include tweets table --%>
+					<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -40,6 +45,8 @@
 		src="webjars/bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
 	<!-- AngularJS -->
 	<script type="text/javascript" src="webjars/angularjs/1.6.4/angular.min.js"></script>
+	<!-- AngularJS Bootstrap UI -->
+	<script type="text/javascript" src="webjars/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
 	<!-- Main js-->
 	<script type="text/javascript" src="js/app.js"></script>
 	

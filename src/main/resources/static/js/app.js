@@ -1,10 +1,11 @@
-var tweetApp = angular.module("tweetApp", []);
+var tweetApp = angular.module("tweetApp", ['ui.bootstrap']);
 
 /**
  * App controller
  */
 tweetApp.controller("appCtrl", function($scope, $http, $filter){
-	$scope.keyword;
+	$scope.keyword = "";
+	$scope.tweets = [];
 	
 	/* Start streaming for a given keyword */
 	$scope.startStreaming = function(){
@@ -68,6 +69,35 @@ tweetApp.controller("tweetListCtrl", function($scope){
 	}, childTweets);
 	$scope.childTweets = childTweets;
 });
+
+/**
+ * Pagination controller
+ */
+tweetApp.controller("paginationCtrl", function($scope){
+	$scope.totalItems = 0;
+	$scope.itemsPerPage = 10;
+	$scope.currentPage = 1;
+	$scope.setPage = function (pageNo) {
+		$scope.currentPage = pageNo;
+	};
+	$scope.$watch('tweets',function(){
+		$scope.totalItems = $scope.tweets.length;
+		setTweetsPerPage($scope.currentPage);
+	});
+	$scope.$watch('currentPage', function(){
+		setTweetsPerPage($scope.currentPage);
+	});
+
+	function setTweetsPerPage(page){
+		var pagedData = $scope.tweets.slice(
+				(page - 1) * $scope.itemsPerPage,
+				page * $scope.itemsPerPage
+		);
+		$scope.tweetsPerPage = pagedData;
+	}
+});
+
+
 
 /**
  * Tweet card directive

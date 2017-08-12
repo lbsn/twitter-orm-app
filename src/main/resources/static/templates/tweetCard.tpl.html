@@ -1,9 +1,9 @@
-<div class="card">
+<div class="card tweet-card">
 	<div class="card-block">
 		<div class="tweet-header text-right {{tweet.sentiment}}">
 			{{tweet.createdAt | date:'medium'}}
 		</div>
-		<div class="tweet-test">
+		<div class="tweet-text">
 			<p class="card-text">{{tweet.text}}</p>
 		</div>
 		<div class="tweet-footer text-muted">{{tweet.repDimension}}</div>
