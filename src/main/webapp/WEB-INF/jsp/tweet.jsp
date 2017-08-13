@@ -34,8 +34,17 @@
 					</div>
 				</div>
 				<div class="row">
-					<%-- Include tweets table --%>
-					<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
+					<div data-ng-controller="TabsCtrl">
+						<uib-tabset active="active"> 
+							<uib-tab index="0" heading="List" select="switchToList()"> 
+								<%-- Include tweets table --%>
+								<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
+							</uib-tab> 
+							<uib-tab index="1" heading="Graph" select="switchToChart()">
+							</uib-tab>
+						</uib-tabset>
+
+					</div>					
 				</div>
 				
 			</div>

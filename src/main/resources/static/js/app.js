@@ -110,7 +110,17 @@ tweetApp.controller("paginationCtrl", function($scope){
 	}
 });
 
-
+/**
+ * Tabs controller
+ */
+tweetApp.controller('TabsCtrl', function ($scope) {
+  $scope.switchToList = function(){
+    alert("To list");
+  }
+  $scope.switchToChart = function(){
+    alert("To graph");
+  }
+});
 
 /**
  * Tweet card directive
