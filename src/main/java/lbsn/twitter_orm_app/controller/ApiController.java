@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import lbsn.twitter_orm_app.domain.AjaxResponse;
+import lbsn.twitter_orm_app.domain.ClusterEntry;
 import lbsn.twitter_orm_app.domain.SearchCriteria;
 import lbsn.twitter_orm_app.domain.TweetEntity;
 import lbsn.twitter_orm_app.domain.TweetUserEntity;
@@ -71,13 +73,18 @@ public class ApiController {
 	}
 	
 	@PostMapping(value="/api/cluster")
-	public AjaxResponse cluster(@Valid @RequestBody SearchCriteria search) throws Exception{
+	public List<ClusterEntry> cluster(@Valid @RequestBody SearchCriteria search) throws Exception{
 		System.out.println("-------------------/CLUSTER " + search.getKeyword());
-		AjaxResponse result = new AjaxResponse();
+		List<ClusterEntry> result = new ArrayList<ClusterEntry>();
 		Map<String, Integer> clusters = this.clusteringService.cluster(
 				this.clusteringService.getTweetList(search.getKeyword())
 				);
-		
+		for(Entry e : clusters.entrySet()){
+			ClusterEntry entry = new ClusterEntry();
+			entry.setId((String) e.getKey());
+			entry.setCluster((Integer) e.getValue());
+			result.add(entry);
+		}
 		return result;
 	}
 }

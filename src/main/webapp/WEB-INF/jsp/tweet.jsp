@@ -34,13 +34,15 @@
 					</div>
 				</div>
 				<div class="row">
-					<div data-ng-controller="TabsCtrl">
+					<div class=col" data-ng-controller="TabsCtrl">
 						<uib-tabset active="active"> 
 							<uib-tab index="0" heading="List" select="switchToList()"> 
 								<%-- Include tweets table --%>
 								<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
 							</uib-tab> 
 							<uib-tab index="1" heading="Graph" select="switchToChart()">
+								<%-- Include bubble chart --%>
+								<%@ include file="/WEB-INF/include/bubbleChart.jspf"%>
 							</uib-tab>
 						</uib-tabset>
 
@@ -60,6 +62,8 @@
 	<script type="text/javascript" src="webjars/angularjs/1.6.4/angular.min.js"></script>
 	<!-- AngularJS Bootstrap UI -->
 	<script type="text/javascript" src="webjars/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
+	<!-- D3 js -->
+	<script type="text/javascript" src="webjars/d3js/3.5.17/d3.min.js"></script>
 	<!-- Main js-->
 	<script type="text/javascript" src="js/app.js"></script>
 	

@@ -9,7 +9,7 @@ public class AjaxResponse {
 	private String keyword;
 	private List<TweetEntity> tweets;
 	private List<TweetUserEntity> users;
-	private Map<String, Integer> clusters;
+	private List<ClusterEntry> clusters;
 	
 	public String getKeyword() {
 		return keyword;
@@ -24,10 +24,10 @@ public class AjaxResponse {
 	public void setTweets(List<TweetEntity> tweets) {
 		this.tweets = tweets;
 	}
-	public Map<String, Integer> getClusters() {
+	public List<ClusterEntry> getClusters() {
 		return clusters;
 	}
-	public void setClusters(Map<String, Integer> clusters) {
+	public void setClusters(List<ClusterEntry> clusters) {
 		this.clusters = clusters;
 	}
 	public List<TweetUserEntity> getUsers() {
@@ -35,6 +35,5 @@ public class AjaxResponse {
 	}
 	public void setUsers(List<TweetUserEntity> users) {
 		this.users = users;
-	}
-	
+	}	
 }

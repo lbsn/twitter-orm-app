@@ -1,11 +1,11 @@
 var tweetApp = angular.module("tweetApp", ['ui.bootstrap']);
+var promise;
 
 /**
  * App controller
  */
 tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
-	var promise;
-	
+		
 	$scope.keyword = "";
 	$scope.tweets = [];
 	
@@ -24,6 +24,7 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 		});
 	}
 	
+	/* Start updating tweet table */
 	$scope.startUpdate = function(search){
 		$scope.stopUpdate();
 		promise = $interval(
@@ -34,6 +35,7 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 		);
 	}
 	
+	/* Stop updating tweet table*/
 	$scope.stopUpdate = function(){
 		$interval.cancel(promise);
 	}
@@ -65,6 +67,24 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 			$scope.tweets = tweets;
 		});
 	}
+	
+	/* Get clusters */
+	$scope.getClusters = function(){
+		var search = {};
+		search["keyword"] = $scope.keyword;
+		var data = JSON.stringify(search);
+		$http.post('/api/cluster', search)
+		.then(function(response){
+			$scope.clusters = response.data;
+		});
+	}
+	
+	/* Get tweet per id */
+	$scope.getTweetPerId = function(_id){
+		var tweet = $filter('filter')($scope.tweets, {id:_id})[0];
+		return tweet;
+	} 
+		
 });
 
 /**
@@ -113,14 +133,35 @@ tweetApp.controller("paginationCtrl", function($scope){
 /**
  * Tabs controller
  */
-tweetApp.controller('TabsCtrl', function ($scope) {
-  $scope.switchToList = function(){
-    alert("To list");
-  }
-  $scope.switchToChart = function(){
-    alert("To graph");
-  }
+tweetApp.controller('TabsCtrl', function ($scope, jsonResponseToClusterData) {
+	$scope.switchToList = function(){
+		console.log("To list");
+	}
+
+	$scope.switchToChart = function(){
+		$scope.stopUpdate(promise);
+		$scope.getClusters();
+	}
 });
+
+/**
+ * Bubble chart controller
+ */
+tweetApp.controller("bubbleChartCtrl", function($scope, $http, jsonResponseToClusterData){
+	$scope.list;
+
+	$scope.getList = function(clusterId){
+		var tweetList = [];
+
+		$scope.clusters.forEach(function(d){
+			if(d.cluster == clusterId){
+				tweetList.push(d.id);
+			}
+		});
+		$scope.tweetFromChartList = tweetList;
+	};    		
+});
+
 
 /**
  * Tweet card directive
@@ -158,3 +199,122 @@ tweetApp.directive('alias', function() {
         }
     };
 });
+
+/**
+ * Json to clusters service
+*/
+tweetApp.service("jsonResponseToClusterData", function(){
+    this.getClusterData = function(data){
+//        var data = JSON.parse(jsonData);
+        var clusterData = [];
+        clusterData.name = "Clusters";
+
+        var clusterMap = d3.map();
+        data.forEach(function(item){
+          if(!clusterMap.has(item.cluster)){
+            clusterMap.set(item.cluster, 1);
+          }
+          else{
+            clusterMap.set(item.cluster, clusterMap.get(item.cluster)+1);
+          }
+        });
+
+        clusterData.children = clusterMap
+          .entries()
+          .map(function(d){
+            d.name = d.key;
+            delete d.key;
+            return d;
+          });
+        return clusterData;
+	};
+});
+
+/**
+* Directive for drawing the bubble chart
+*/
+tweetApp.directive("bubbleChart", function(jsonResponseToClusterData, $compile){
+    return{
+      restrict:"A",
+      link: function(scope,elem){
+          scope.$watch("clusters", function(){
+            if(angular.isDefined(scope.clusters)){
+              var data = jsonResponseToClusterData.getClusterData(scope.clusters);
+              
+              /* Draw chart */
+              var diameter = elem.width();
+              var color = d3.scale.category20();
+              
+              // Remove existing svg
+              d3.select("#bubbleChart").selectAll("*").remove();
+              
+              // Append svg element to body
+              var svg = d3.select("#bubbleChart")
+                .append("svg")
+                .attr("width", diameter)
+                .attr("height", diameter)
+                .attr("class", "bubble");
+
+              // Initialize pack layout
+              var pack = d3.layout.pack().size([diameter,diameter]).padding(1.5);
+              
+              // Run pack layout and return nodes array
+              var nodes = pack.nodes(data);
+
+              // Exclude root node (has no circle element)
+              nodes = nodes.filter(function(d){
+                return !d.children;
+              });
+
+              // Setup the chart
+              var bubbles = svg.append("g")
+                 .attr("transform", "translate(0,0)")
+                 .selectAll(".bubble")
+                 .data(nodes)
+                 .enter();
+
+              // // Create the bubbles
+              bubbles.append("circle")
+                .attr("r", function(d){
+                  return d.r
+                })
+                .attr("cx", function(d){
+                  return d.x;
+                })
+                .attr("cy", function(d){
+                  return d.y;
+                })
+                .attr("ng-click", function(d){
+                  return "getList(" + d.name + ")";
+                })
+                .style("fill", function(d) {
+                  return color(d.value);
+                });
+
+              // // Format the text for each bubble
+              bubbles.append("text")
+                .attr("x", function(d){
+                  return d.x;
+                })
+                .attr("y", function(d){
+                  return d.y + 5;
+                })
+                .attr("text-anchor", "middle")
+                .text(function(d){
+                  return d["name"];
+                })
+                .style({
+                  "fill":"white", 
+                  "font-family":"Helvetica Neue, Helvetica, Arial, san-serif",
+                  "font-size": "12px"
+                });
+
+              /* Compile */
+              $compile(elem.contents())(scope);
+            }
+          });
+        }
+    }
+    
+  });
+
