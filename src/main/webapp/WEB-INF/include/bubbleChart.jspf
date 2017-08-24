@@ -2,7 +2,7 @@
 	<div id="bubbleChart" class="bubbleChart col-md-7" data-bubble-chart>
 		
 	</div>
-	<div id="bubbleList" class="bubbleList">
+	<div id="bubbleList" class="bubbleList col-md-5">
 		<ul>
 			<li data-ng-repeat="tweetId in tweetFromChartList">
 				{{getTweetPerId(tweetId).text}}
