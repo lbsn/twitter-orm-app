@@ -20,6 +20,7 @@ public class ClusteringService {
 	KMeansClusterer clusterer;
 	
 	public Map<String, String> getTweetList(String keyword){
+		// A Map to store retrieved tweet as (tweet-id, tweet-text) pairs
 		Map<String, String> tweetMap = new LinkedHashMap<String,String>();
 		List<TweetEntity> tweets = this.tweetDao.findByKeyword(keyword);
 		
@@ -30,8 +31,10 @@ public class ClusteringService {
 	}
 	
 	public Map<String, Integer> cluster(Map<String, String> tweetMap) throws Exception{
+		// A Map to store the generated clusters as (tweet-id, cluster-id) pairs
 		Map<String, Integer> result = new LinkedHashMap<String, Integer>();
 		
+		// Data to be passed to the cluster function is values from tweetMap (tweets texts)
 		List<String> dataToLoad = new ArrayList<String>(tweetMap.values());
 		this.clusterer.loadData(dataToLoad);
 		this.clusterer.buildClusterer();
