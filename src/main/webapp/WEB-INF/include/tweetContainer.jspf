@@ -1,0 +1,42 @@
+<!-- Tweets container -->
+<div class="col-md-8 tweets-container" id="tweets-container">
+	<div class="row">
+		<!-- Shown when streaming has started -->
+		<div class="card bg-inverse streaming-header"
+			data-ng-hide="tweets.length == 0">
+			<h4 class="card-title">
+				Streaming for: <span class="streaming-keyword">{{sentKeyword}}</span>
+				<span class="list-size">{{tweets.length}}</span>
+			</h4>
+			<span>
+				<button data-ng-click="stopUpdate()">Stop</button>
+			</span>
+		</div>
+		<!-- Shown when the page is loaded but no streaming has started -->
+		<div data-ng-show="tweets.length == 0">
+			<h4 class="text-muted">Enter a keyword and start streaming!</h4>
+		</div>
+	</div>
+	<div class="row" data-ng-hide="tweets.length == 0">
+		<div class=col " data-ng-controller="TabsCtrl">
+			
+			<uib-tabset active="active">
+				<uib-tab index="0" heading="List" select="switchToList()"> 
+			
+					<%-- Include tweets table --%>
+					<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
+			
+				</uib-tab>
+				
+				<uib-tab index="1" heading="Graph" select="switchToChart()">
+			
+					<%-- Include bubble chart --%>
+					<%@ include file="/WEB-INF/include/bubbleChart.jspf"%>
+				</uib-tab>
+			</uib-tabset>
+
+		</div>
+	</div>
+
+</div>
+<!-- END Tweets container -->

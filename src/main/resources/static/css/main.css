@@ -1,4 +1,5 @@
 body{
+	padding-top: 50px;
 }
 .navbar{
    border-radius:0px;
@@ -8,6 +9,8 @@ body{
 .sidebar{
 	color:white;
 	height:100%;
+	position:sticky;
+	top:50px;
 }
 .side-section{
 	padding:5px;

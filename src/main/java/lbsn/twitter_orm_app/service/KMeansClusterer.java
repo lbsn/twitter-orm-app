@@ -28,7 +28,7 @@ public class KMeansClusterer {
 		Attribute _id = new Attribute("_id", true);
 
 		ArrayList<Attribute> attr = new ArrayList<Attribute>();
-		// TODO: This should store the MongoDb id, for future reference
+		// FIXME: This should store the MongoDb id, for future reference
 		attr.add(_id);
 		attr.add(text);
 
@@ -40,7 +40,7 @@ public class KMeansClusterer {
 			Instance instance = new DenseInstance(2);
 			instance.setDataset(this.data);
 
-			// TODO: This needs to be changed!
+			// FIXME: This needs to be changed!
 			instance.setValue(this.data.attribute(0), "_" + Math.random());
 			instance.setValue(this.data.attribute(1), t);
 

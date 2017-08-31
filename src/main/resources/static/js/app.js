@@ -176,11 +176,12 @@ tweetApp.directive("tweetCard", function(){
 /**
  * User card directive
 */
+
+// FIXME: There should be a default img in case original one is not available
 tweetApp.directive("userCard", function(){
 	return{
 		restrict:"A",
-		templateUrl:"/templates/userCard.tpl.html"
-		
+		templateUrl:"/templates/userCard.tpl.html"		
 	}
 });
 

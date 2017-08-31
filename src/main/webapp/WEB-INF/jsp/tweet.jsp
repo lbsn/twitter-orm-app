@@ -20,36 +20,8 @@
 			<%-- Include sidebar --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
 
-			<!-- Tweets container -->
-			<div class="col-md-8 tweets-container" id="tweets-container">
-				<div class="row">
-					<div class="card bg-inverse streaming-header" data-ng-hide="tweets.length == 0">
-						<h4 class="card-title">Streaming for: 
-							<span class="streaming-keyword">{{sentKeyword}}</span>
-							<span class="list-size">{{tweets.length}}</span>
-						</h4>
-						<span>
-							<button data-ng-click="stopUpdate()">Stop</button>
-						</span>
-					</div>
-				</div>
-				<div class="row">
-					<div class=col" data-ng-controller="TabsCtrl">
-						<uib-tabset active="active"> 
-							<uib-tab index="0" heading="List" select="switchToList()"> 
-								<%-- Include tweets table --%>
-								<%@ include file="/WEB-INF/include/tweetTable.jspf"%>
-							</uib-tab> 
-							<uib-tab index="1" heading="Graph" select="switchToChart()">
-								<%-- Include bubble chart --%>
-								<%@ include file="/WEB-INF/include/bubbleChart.jspf"%>
-							</uib-tab>
-						</uib-tabset>
-
-					</div>					
-				</div>
-				
-			</div>
+			<%-- Include tweets container --%>
+			<%@ include file="/WEB-INF/include/tweetContainer.jspf"%>
 		</div>
 	</div>
 
