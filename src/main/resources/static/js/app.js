@@ -8,6 +8,7 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 		
 	$scope.keyword = "";
 	$scope.tweets = [];
+	$scope.updating = false;
 	
 	/* Start streaming for a given keyword */
 	$scope.startStreaming = function(){
@@ -20,28 +21,41 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 		}).
 		then(function(response){
 			$scope.sentKeyword = $scope.keyword;
-			$scope.startUpdate(search);			
+			$scope.toggleUpdate();			
 		});
 	}
 	
 	/* Start updating tweet table */
-	$scope.startUpdate = function(search){
-		$scope.stopUpdate();
-		promise = $interval(
-			function(){
-				$scope.updateTable(search)
-			},
-			5000
-		);
+	$scope.toggleUpdate = function(){
+		// If updating, then stop
+		if($scope.updating){
+			$interval.cancel(promise);
+			$scope.updating = false;
+		}
+		
+		//Else start
+		else{
+			//$scope.stopUpdate();
+			promise = $interval(
+				function(){
+					$scope.updateTable()
+				},
+				5000
+			);
+			$scope.updating = true;	
+		}
 	}
 	
 	/* Stop updating tweet table*/
 	$scope.stopUpdate = function(){
 		$interval.cancel(promise);
+		$scope.updating = false;
 	}
 	
 	/* Update tweet table */
-	$scope.updateTable = function(search){
+	$scope.updateTable = function(){
+		var search = {};
+		search["keyword"] = $scope.keyword;
 		$http.post("/api/update", search).
 		then(function(response){
 			var tweets = response.data['tweets'];

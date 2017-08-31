@@ -5,12 +5,13 @@
 		<div class="card bg-inverse streaming-header"
 			data-ng-hide="tweets.length == 0">
 			<h4 class="card-title">
+				<span class="" data-ng-click="toggleUpdate()">
+					<img src="img/pause_icon.svg" data-ng-if="updating == true"/>
+					<img src="img/play_icon.svg" data-ng-if="updating == false"/>
+				</span>
 				Streaming for: <span class="streaming-keyword">{{sentKeyword}}</span>
 				<span class="list-size">{{tweets.length}}</span>
-			</h4>
-			<span>
-				<button data-ng-click="stopUpdate()">Stop</button>
-			</span>
+			</h4>			
 		</div>
 		<!-- Shown when the page is loaded but no streaming has started -->
 		<div data-ng-show="tweets.length == 0">
