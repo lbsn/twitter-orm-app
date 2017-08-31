@@ -10,7 +10,9 @@
 		</thead>
 		<tbody>
 			<tr data-ng-repeat="tweet in tweetsPerPage | orderBy: 'createdAt':true">
+				<!-- Use userCard directive -->
 				<td data-user-card></td>
+				<!-- Use tweetCard directive -->
 				<td data-tweet-card></td>
 			</tr>
 		</tbody>

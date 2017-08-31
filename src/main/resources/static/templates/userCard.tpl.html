@@ -1,5 +1,9 @@
 <div class="card user-card" data-alias="tweet.user[0] as user">
-	<img class="card-img-top rounded img-fluid" data-ng-src="{{user.profile.profileImageURL}}"/>
+	
+	<img class="card-img-top rounded img-fluid" 
+	data-ng-src="{{user.profile.profileImageURL}}"
+	onerror="this.src='img/default_profile.svg'"/>
+	
 	<span class="badge-influencer bg-danger" data-ng-show="user.influencer">Influencer</span>
 	<div class="card-block">
 		<h6 class="card-title profile-name">{{user.profile.screenName}}</h6>		

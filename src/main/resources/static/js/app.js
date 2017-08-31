@@ -20,6 +20,7 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 			transformResponse: undefined
 		}).
 		then(function(response){
+			// TODO: This is probably never used
 			$scope.sentKeyword = $scope.keyword;
 			$scope.toggleUpdate();			
 		});
@@ -46,11 +47,12 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 		}
 	}
 	
-	/* Stop updating tweet table*/
+	/* Stop updating tweet table
 	$scope.stopUpdate = function(){
 		$interval.cancel(promise);
 		$scope.updating = false;
 	}
+	*/
 	
 	/* Update tweet table */
 	$scope.updateTable = function(){

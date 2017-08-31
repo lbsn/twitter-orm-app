@@ -1,23 +1,31 @@
 <!-- Tweets container -->
 <div class="col-md-8 tweets-container" id="tweets-container">
+	<!-- CONTAINER HEADER -->
 	<div class="row">
+	
 		<!-- Shown when streaming has started -->
 		<div class="card bg-inverse streaming-header"
 			data-ng-hide="tweets.length == 0">
 			<h4 class="card-title">
+				
+				<!-- Button to pause/start table updating -->
 				<span class="" data-ng-click="toggleUpdate()">
 					<img src="img/pause_icon.svg" data-ng-if="updating == true"/>
 					<img src="img/play_icon.svg" data-ng-if="updating == false"/>
 				</span>
+				
 				Streaming for: <span class="streaming-keyword">{{sentKeyword}}</span>
 				<span class="list-size">{{tweets.length}}</span>
 			</h4>			
 		</div>
-		<!-- Shown when the page is loaded but no streaming has started -->
+		
+		<!-- Shown when the page is loaded but no streaming has yet started -->
 		<div data-ng-show="tweets.length == 0">
 			<h4 class="text-muted">Enter a keyword and start streaming!</h4>
 		</div>
 	</div>
+	
+	<!-- CONTAINER TABS -->
 	<div class="row" data-ng-hide="tweets.length == 0">
 		<div class=col " data-ng-controller="TabsCtrl">
 			

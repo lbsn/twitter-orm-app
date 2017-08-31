@@ -13,17 +13,19 @@
 </head>
 <body>
 
-	<%-- Include header --%>
+	<%-- PAGE HEADER --%>
 	<%@ include file="/WEB-INF/include/header.jspf"%>
+	
+	<%-- PAGE CONTAINER --%>
 	<div class="container-fluid">
 		<div class="row" data-ng-app="tweetApp" data-ng-controller="appCtrl">
-			<%-- Include sidebar --%>
+			<%-- PAGE SIDEBAR --%>
 			<%@ include file="/WEB-INF/include/sidebar.jspf"%>
 
-			<%-- Include tweets container --%>
+			<%-- TWEETS CONTAINER --%>
 			<%@ include file="/WEB-INF/include/tweetContainer.jspf"%>
 		</div>
-	</div>
+	</div><%-- END PAGE CONTAINER --%>
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="webjars/jquery/3.1.1/jquery.min.js"></script>
