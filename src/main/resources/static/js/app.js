@@ -30,29 +30,31 @@ tweetApp.controller("appCtrl", function($scope, $http, $filter, $interval){
 	$scope.toggleUpdate = function(){
 		// If updating, then stop
 		if($scope.updating){
-			$interval.cancel(promise);
-			$scope.updating = false;
+			$scope.stopUpdate();
 		}
 		
 		//Else start
 		else{
-			//$scope.stopUpdate();
-			promise = $interval(
-				function(){
-					$scope.updateTable()
-				},
-				5000
-			);
-			$scope.updating = true;	
+			$scope.startUpdate();				
 		}
 	}
 	
-	/* Stop updating tweet table
+	/* Stop updating tweet table */
 	$scope.stopUpdate = function(){
 		$interval.cancel(promise);
 		$scope.updating = false;
 	}
-	*/
+	
+	/* Start updating tweet table */
+	$scope.startUpdate = function(){
+		promise = $interval(function(){
+					$scope.updateTable()
+				},
+				5000
+		);
+		$scope.updating = true;
+	}
+	
 	
 	/* Update tweet table */
 	$scope.updateTable = function(){
@@ -155,6 +157,7 @@ tweetApp.controller('TabsCtrl', function ($scope, jsonResponseToClusterData) {
 	}
 
 	$scope.switchToChart = function(){
+		// Stop updating tweets list
 		$scope.stopUpdate(promise);
 		$scope.getClusters();
 	}
@@ -164,8 +167,8 @@ tweetApp.controller('TabsCtrl', function ($scope, jsonResponseToClusterData) {
  * Bubble chart controller
  */
 tweetApp.controller("bubbleChartCtrl", function($scope, $http, jsonResponseToClusterData){
-	$scope.list;
-
+	$scope.tweetFromChartList = [];
+	
 	$scope.getList = function(clusterId){
 		var tweetList = [];
 
@@ -175,7 +178,14 @@ tweetApp.controller("bubbleChartCtrl", function($scope, $http, jsonResponseToClu
 			}
 		});
 		$scope.tweetFromChartList = tweetList;
-	};    		
+	};
+	
+	// Reset tweetFromChartList when tab is deselected
+	$scope.$watch('active', function(){
+		if($scope.active != 1){
+			$scope.tweetFromChartList = [];
+		}
+	});
 });
 
 
@@ -192,8 +202,6 @@ tweetApp.directive("tweetCard", function(){
 /**
  * User card directive
 */
-
-// FIXME: There should be a default img in case original one is not available
 tweetApp.directive("userCard", function(){
 	return{
 		restrict:"A",
@@ -232,7 +240,7 @@ tweetApp.service("jsonResponseToClusterData", function(){
             clusterMap.set(item.cluster, 1);
           }
           else{
-            clusterMap.set(item.cluster, clusterMap.get(item.cluster)+1);
+            clusterMap.set(item.cluster, clusterMap.get(item.cluster) + 1);
           }
         });
 
@@ -253,7 +261,7 @@ tweetApp.service("jsonResponseToClusterData", function(){
 tweetApp.directive("bubbleChart", function(jsonResponseToClusterData, $compile){
     return{
       restrict:"A",
-      link: function(scope,elem){
+      link: function(scope, elem){
           scope.$watch("clusters", function(){
             if(angular.isDefined(scope.clusters)){
               var data = jsonResponseToClusterData.getClusterData(scope.clusters);
@@ -273,7 +281,10 @@ tweetApp.directive("bubbleChart", function(jsonResponseToClusterData, $compile){
                 .attr("class", "bubble");
 
               // Initialize pack layout
-              var pack = d3.layout.pack().size([diameter,diameter]).padding(1.5);
+              var pack = d3.layout
+	              .pack()
+	              .size([diameter,diameter])
+	              .padding(1.5);
               
               // Run pack layout and return nodes array
               var nodes = pack.nodes(data);
@@ -290,7 +301,7 @@ tweetApp.directive("bubbleChart", function(jsonResponseToClusterData, $compile){
                  .data(nodes)
                  .enter();
 
-              // // Create the bubbles
+              // Create the bubbles
               bubbles.append("circle")
                 .attr("r", function(d){
                   return d.r
@@ -308,7 +319,7 @@ tweetApp.directive("bubbleChart", function(jsonResponseToClusterData, $compile){
                   return color(d.value);
                 });
 
-              // // Format the text for each bubble
+              // Format the text for each bubble
               bubbles.append("text")
                 .attr("x", function(d){
                   return d.x;
@@ -318,7 +329,7 @@ tweetApp.directive("bubbleChart", function(jsonResponseToClusterData, $compile){
                 })
                 .attr("text-anchor", "middle")
                 .text(function(d){
-                  return d["name"];
+                  return d["value"];
                 })
                 .style({
                   "fill":"white", 

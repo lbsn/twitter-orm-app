@@ -1,7 +1,10 @@
 <div data-ng-controller="bubbleChartCtrl">
+	<!-- CHART CONTAINER -->
 	<div id="bubbleChart" class="bubbleChart col-md-7" data-bubble-chart>
 		
 	</div>
+	
+	<!-- LIST CONTAINER -->
 	<div id="bubbleList" class="bubbleList col-md-5">
 		<ul>
 			<li data-ng-repeat="tweetId in tweetFromChartList">

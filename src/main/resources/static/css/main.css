@@ -84,6 +84,11 @@ streaming-keyword{
 	padding: 3px 0px 5px 0px;
 }
 
+/* BUBBLE CHART */
+.bubbleChart circle{
+	cursor:pointer;	
+}
+
 /* BUBBLE LIST */
 .bubbleList ul{
 	list-style: none;
