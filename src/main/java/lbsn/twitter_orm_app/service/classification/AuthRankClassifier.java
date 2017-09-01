@@ -127,7 +127,7 @@ public class AuthRankClassifier {
 				
 	}
 	
-	public boolean classify(Instances dataset) throws Exception{
+	public synchronized boolean classify(Instances dataset) throws Exception{
 		double pred = this.model.classifyInstance(dataset.instance(0));
 		String classValue = dataset.classAttribute().value((int) pred);
 		return (classValue == "opinion_maker") ? true : false;
