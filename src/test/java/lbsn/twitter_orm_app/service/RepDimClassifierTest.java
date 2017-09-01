@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import lbsn.twitter_orm_app.service.classification.RepDimClassifier;
 import twitter4j.Status;
 import weka.core.Instances;
 

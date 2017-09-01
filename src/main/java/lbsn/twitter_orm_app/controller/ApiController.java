@@ -23,8 +23,8 @@ import lbsn.twitter_orm_app.domain.TweetEntity;
 import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetDao;
 import lbsn.twitter_orm_app.repository.TweetUserDao;
-import lbsn.twitter_orm_app.service.ClusteringService;
 import lbsn.twitter_orm_app.service.TweetStream;
+import lbsn.twitter_orm_app.service.clustering.ClusteringService;
 import twitter4j.User;
 
 @RestController

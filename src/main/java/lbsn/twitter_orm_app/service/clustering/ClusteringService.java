@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.service;
+package lbsn.twitter_orm_app.service.clustering;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

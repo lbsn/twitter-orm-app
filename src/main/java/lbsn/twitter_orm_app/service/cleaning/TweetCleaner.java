@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.service;
+package lbsn.twitter_orm_app.service.cleaning;
 
 import java.util.Arrays;
 import java.util.List;

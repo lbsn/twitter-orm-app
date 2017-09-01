@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.service;
+package lbsn.twitter_orm_app.service.classification;
 
 import org.springframework.stereotype.Service;
 

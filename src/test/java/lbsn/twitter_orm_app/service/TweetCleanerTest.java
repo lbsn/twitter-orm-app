@@ -8,6 +8,10 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import lbsn.twitter_orm_app.service.cleaning.CleanOptions;
+import lbsn.twitter_orm_app.service.cleaning.TweetCleaner;
+import lbsn.twitter_orm_app.service.cleaning.TweetCleanerConfiguration;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Ignore

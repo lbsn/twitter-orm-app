@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.service;
+package lbsn.twitter_orm_app.service.classification;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,6 +8,9 @@ import java.util.Arrays;
 import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.stereotype.Service;
 
+import lbsn.twitter_orm_app.service.cleaning.CleanOptions;
+import lbsn.twitter_orm_app.service.cleaning.TweetCleaner;
+import lbsn.twitter_orm_app.service.cleaning.TweetCleanerConfiguration;
 import twitter4j.User;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Attribute;

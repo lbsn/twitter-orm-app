@@ -1,4 +1,4 @@
-package lbsn.twitter_orm_app.service;
+package lbsn.twitter_orm_app.service.cleaning;
 
 /**
  * Stores possible values for TweetCleanerConfiguration options.

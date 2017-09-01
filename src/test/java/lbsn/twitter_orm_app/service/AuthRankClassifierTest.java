@@ -17,6 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import lbsn.twitter_orm_app.domain.TweetUserEntity;
 import lbsn.twitter_orm_app.repository.TweetUserDao;
+import lbsn.twitter_orm_app.service.classification.AuthRankClassifier;
 import weka.core.Instances;
 
 @RunWith(SpringRunner.class)
