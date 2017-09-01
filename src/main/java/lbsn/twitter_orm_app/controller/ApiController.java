@@ -42,11 +42,11 @@ public class ApiController {
 	public ResponseEntity<String> submit(@Valid @RequestBody SearchCriteria search) throws Exception{
 		System.out.println("-------------------/SEARCH " + search.getKeyword());
 		tweetStream.setKeyword(search.getKeyword());
-//		tweetStream.startStreaming();
+		tweetStream.startStreaming();
 		return new ResponseEntity<String>("ok", HttpStatus.OK);
 	}
 	
-	@PostMapping(value="/api/update", produces="application/json;charset='ISO-8859-1'")
+	@PostMapping(value="/api/update")
 	public AjaxResponse update(@Valid @RequestBody SearchCriteria search){
 		System.out.println("-------------------/UPDATE " + search.getKeyword());
 		// Object to store ajax response

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import weka.classifiers.Classifier;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.core.Attribute;
 import weka.core.DenseInstance;
@@ -60,7 +59,8 @@ public class RepDimClassifier {
 		// Add new instance
 		Instance instance = new DenseInstance(2);
 		instance.setDataset(dataset);
-		instance.setValue(dataset.attribute("text"), this.cleanText(tweetText));
+		String text = this.cleanText(tweetText);
+		instance.setValue(dataset.attribute("text"), text);
 		dataset.add(instance);
 		return dataset;
 	}
@@ -80,7 +80,7 @@ public class RepDimClassifier {
 		return tc.clean(text);
 	}
 
-	public String classify(Instances dataset){
+	public synchronized String classify(Instances dataset){
 		double pred;
 		try {
 			pred = this.model.classifyInstance(dataset.instance(0));

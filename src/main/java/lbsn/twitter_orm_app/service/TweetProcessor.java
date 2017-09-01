@@ -56,16 +56,18 @@ public class TweetProcessor implements Runnable{
 		}			
 	}
 	
-	public void process(Status tweet) throws Exception{
+	public TweetEntity process(Status tweet) throws Exception{
 		TweetEntity entity = new TweetEntity();
+		String text = tweet.getText();
 		
 		// Set keyword
 		entity.setKeyword(this.tweetStream.getKeyword());
 		// Set sentiment
-		entity.setSentiment(this.computeSentiment(tweet.getText()));
+		entity.setSentiment(this.computeSentiment(text));
 		// Set reputation dimension
-		entity.setRepDimension(this.computeRepDim(tweet.getText()));
+		entity.setRepDimension(this.computeRepDim(text));
 		// Set createdAt
+		
 		entity.setCreatedAt(tweet.getCreatedAt());
 		// Set text
 		entity.setText(tweet.getText());
@@ -79,7 +81,7 @@ public class TweetProcessor implements Runnable{
 		user.setInfluencer(this.computeAuthInfluence(user.getProfile()));
 		// Save tweet user
 		this.tweetUserDao.save(user);
-		System.out.println("saved for keyword: " + this.tweetStream.getKeyword());
+		return entity;
 	}
 	
 	/**
@@ -93,10 +95,16 @@ public class TweetProcessor implements Runnable{
 	 * Reputation dimension classification
 	 * @throws Exception 
 	 */
-	private String computeRepDim(String text) throws Exception{
-		Instances dataset = this.repDimClassifier.makeDataset();
-		dataset = this.repDimClassifier.addInstance(dataset, text);
-		return this.repDimClassifier.classify(dataset);
+	public String computeRepDim(String text){
+		try{
+			Instances dataset = this.repDimClassifier.makeDataset();
+			dataset = this.repDimClassifier.addInstance(dataset, text);
+			return this.repDimClassifier.classify(dataset);	
+		}
+		catch(Exception e){
+			return null;
+		}
+		
 	}
 	
 	/**
